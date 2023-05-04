@@ -72,7 +72,7 @@ export function PassComp({ data }: Props) {
                 style={{
                   fontFamily: theme.fonts.Bold,
                   color:
-                    data.status === "AUTORIZADO"
+                    data.status === "INSCRIÇÃO APROVADA"
                       ? theme.colors.secundary[1]
                       : "#fa5b5b",
                 }}
@@ -80,7 +80,7 @@ export function PassComp({ data }: Props) {
                 {data.status}{" "}
               </S.subTitle>
 
-              {data?.status !== "AUTORIZADO" && (
+              {data?.status === "INSCRIÇÃO SOLICITADA" && (
                 <TouchableOpacity
                   onPress={() => setModal(true)}
                   style={{ padding: 4 }}
@@ -96,16 +96,17 @@ export function PassComp({ data }: Props) {
           </S.content>
         </S.Container>
 
-        <Box w="full" pr="10" />
       </S.box>
 
-      <S.subTitle style={{}}>CATEGORIAS:</S.subTitle>
+      <Box p='2'>
+        <S.subTitle>CATEGORIAS:</S.subTitle>
+        {data?.category?.map((h) => (
+          <S.bxCategoria key={h.type} >
+            <S.subTitle>{h.type}</S.subTitle>
+          </S.bxCategoria>
+        ))}
 
-      {data?.category.map((h) => (
-        <S.bxCategoria>
-          <S.subTitle>{h.type}</S.subTitle>
-        </S.bxCategoria>
-      ))}
+      </Box>
     </Box>
   );
 }

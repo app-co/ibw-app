@@ -8,12 +8,13 @@ const w = Dimensions.get("screen").width;
 
 export const Container = styled.View`
   width: 100%;
-  height: ${w * 0.5}px;
+  height: ${w * 0.4}px;
 
   flex-direction: row;
 `;
 
-export const box = styled.View``;
+export const box = styled.View`
+`;
 
 export const bg = styled.Image`
   position: absolute;
@@ -47,6 +48,7 @@ export const bxCategoria = styled.View`
   margin-bottom: 10px;
   padding: 2px 5px;
   width: ${w * 0.8};
+
 `;
 
 export const bxRow = styled.View`
@@ -56,7 +58,7 @@ export const bxRow = styled.View`
 
 export const content = styled.View`
   width: ${w * 0.7};
-  margin-left: 10px;
+  padding-top: 10px;
 `;
 
 export const boxImage = styled.View`

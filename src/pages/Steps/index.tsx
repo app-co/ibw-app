@@ -322,7 +322,7 @@ export function Steps() {
             </S.text>
           </S.boxSelect>
 
-          <Contrato page={page} item={(h) => setPage(h)} />
+          <Contrato page={14} item={(h) => setPage(h)} />
 
           {page === 14 && (
             <S.boxSelect style={{ backgroundColor: theme.colors.secundary[1] }}>
