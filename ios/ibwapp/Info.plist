@@ -5,7 +5,7 @@
     <key>CFBundleDevelopmentRegion</key>
     <string>$(DEVELOPMENT_LANGUAGE)</string>
     <key>CFBundleDisplayName</key>
-    <string>ibw-app</string>
+    <string>IBW</string>
     <key>CFBundleExecutable</key>
     <string>$(EXECUTABLE_NAME)</string>
     <key>CFBundleIdentifier</key>
@@ -37,12 +37,12 @@
       <dict>
         <key>CFBundleURLSchemes</key>
         <array>
-          <string>exp+ibw-app</string>
+          <string>exp+ibw</string>
         </array>
       </dict>
     </array>
     <key>CFBundleVersion</key>
-    <string>1</string>
+    <string>14</string>
     <key>LSRequiresIPhoneOS</key>
     <true/>
     <key>NSAppTransportSecurity</key>

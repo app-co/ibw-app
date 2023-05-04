@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "ibw-app",
-    "slug": "ibw-app",
+    "name": "IBW",
+    "slug": "IBW",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
@@ -9,7 +9,7 @@
     "splash": {
       "image": "./assets/splash.png",
       "resizeMode": "contain",
-      "backgroundColor": "#ffffff"
+      "backgroundColor": "#33146A"
     },
     "assetBundlePatterns": [
       "**/*"
@@ -17,15 +17,17 @@
     "ios": {
       "supportsTablet": true,
       "googleServicesFile": "./GoogleService-Info.plist",
-      "bundleIdentifier": "org.name.bigwave"
+      "bundleIdentifier": "org.name.bigwave",
+      "buildNumber": "14"
     },
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
-        "backgroundColor": "#ffffff"
+        "backgroundColor": "#33146A"
       },
       "googleServicesFile": "./google-services.json",
-      "package": "com.bigwave1"
+      "package": "com.bigwave1",
+      "versionCode": 14
     },
     "web": {
       "favicon": "./assets/favicon.png"
