@@ -282,7 +282,7 @@ export function Steps() {
   }, [regulamento]);
 
   const filCategoryA = selectCategory.filter((h) => {
-    if (h.type.includes('TOW IN')) {
+    if (h.type.includes("TOW IN")) {
       return h;
     }
   });
@@ -293,7 +293,7 @@ export function Steps() {
     }
   });
 
-  console.log("cat", filCategoryA)
+  console.log("cat", filCategoryA);
 
   return (
     <S.box>
@@ -346,11 +346,7 @@ export function Steps() {
           <S.form onSubmit={handleSubmit} ref={ref}>
             <Input nome="Nome completo" name="name" />
             <Input keyboardType="email-address" nome="E-mail" name="email" />
-            <Input
-              nome="CPF ou Passaporte"
-              name="cpf"
-              maxLength={14}
-            />
+            <Input nome="CPF ou Passaporte" name="cpf" maxLength={14} />
             <Input
               keyboardType="numeric"
               mask={{ type: "date" }}
@@ -423,7 +419,6 @@ export function Steps() {
                 />
               </Box>
             )}
-
 
             {filCategoryB.length > 0 && (
               <Box>

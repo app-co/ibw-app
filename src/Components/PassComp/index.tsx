@@ -95,17 +95,15 @@ export function PassComp({ data }: Props) {
             </S.bxRow>
           </S.content>
         </S.Container>
-
       </S.box>
 
-      <Box p='2'>
+      <Box p="2">
         <S.subTitle>CATEGORIAS:</S.subTitle>
         {data?.category?.map((h) => (
-          <S.bxCategoria key={h.type} >
+          <S.bxCategoria key={h.type}>
             <S.subTitle>{h.type}</S.subTitle>
           </S.bxCategoria>
         ))}
-
       </Box>
     </Box>
   );
