@@ -193,9 +193,9 @@ export function Steps() {
         return Alert.alert("Erro", "Faça o upload de uma imagem");
       }
 
-      if (cpf.length < 14) {
-        return Alert.alert("Erro", "Cpf inválido");
-      }
+      // if (cpf.length < 14) {
+      //   return Alert.alert("Erro", "Cpf inválido");
+      // }
 
       if (birthday.length < 8) {
         return Alert.alert("Erro", "Data de aniversário inválido");
@@ -281,12 +281,19 @@ export function Steps() {
     }
   }, [regulamento]);
 
-  const filCategory = selectCategory.filter((h) => {
-    if (h.id === "1" || "2") {
+  const filCategoryA = selectCategory.filter((h) => {
+    if (h.type.includes('TOW IN')) {
       return h;
     }
-    return [];
   });
+
+  const filCategoryB = selectCategory.filter((h) => {
+    if (h.id === "2") {
+      return h;
+    }
+  });
+
+  console.log("cat", filCategoryA)
 
   return (
     <S.box>
@@ -340,8 +347,7 @@ export function Steps() {
             <Input nome="Nome completo" name="name" />
             <Input keyboardType="email-address" nome="E-mail" name="email" />
             <Input
-              keyboardType="numeric"
-              nome="CPF OU PASSAPORTE"
+              nome="CPF ou Passaporte"
               name="cpf"
               maxLength={14}
             />
@@ -391,7 +397,7 @@ export function Steps() {
               )}
             />
 
-            {selectCategory[0]?.id === "1" && selectCategory.length < 2 && (
+            {filCategoryA.length > 0 && (
               <Box>
                 <S.subText>
                   Experiência prévia no surf de tow in em ondas grande ou lajes
@@ -418,7 +424,8 @@ export function Steps() {
               </Box>
             )}
 
-            {selectCategory[0]?.id === "2" && selectCategory.length < 2 && (
+
+            {filCategoryB.length > 0 && (
               <Box>
                 <S.subText>
                   Experiência prévia em pilotagem de jet ski no tow in
@@ -445,7 +452,7 @@ export function Steps() {
               </Box>
             )}
 
-            {filCategory.length > 1 && (
+            {/* {filCategoryA.length > 1 && (
               <Box>
                 <S.subText>
                   Experiência prévia no surf de tow in em ondas grande ou lajes
@@ -493,7 +500,7 @@ export function Steps() {
                   variant="secundary"
                 />
               </Box>
-            )}
+            )} */}
 
             <S.subText style={{ marginTop: 30 }}>
               Faça upload de foto para indentificação
