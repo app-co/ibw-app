@@ -47,7 +47,7 @@ export function Candidatos() {
 
   const reprove = React.useCallback(async (id: string) => {
     fire().collection("inscricao").doc(id).update({
-      status: "INSCRIÇÃO REPROVADO",
+      status: "INSCRIÇÃO REPROVADA",
     });
   }, []);
 

@@ -132,12 +132,25 @@ export function Steps() {
 
   const event_id = `${getYear(new Date())}${user.id}`;
 
+  const filCategoryA = selectCategory.filter((h) => {
+    if (h.type.includes("TOW IN")) {
+      return h;
+    }
+  });
+
+  const filCategoryB = selectCategory.filter((h) => {
+    if (h.id === "2") {
+      return h;
+    }
+  });
+
   const handleSubmit = React.useCallback(
     async (data: Credentials) => {
       const { name, email, cpf, birthday, localy } = data;
       setLoad(true);
 
       if (!regulamento) {
+        setLoad(false);
         return Alert.alert(
           "Atenção",
           "Leia o regulamento para encerrar sua inscrição"
@@ -145,27 +158,25 @@ export function Steps() {
       }
 
       const findCpf = resonse.find((h) => {
-        const cpf = data.cpf.replace(/[^\d]/g, "");
+        const { cpf } = data;
 
         if (h.cpf === cpf) {
+          setLoad(false);
           return h;
         }
       });
 
       const validName = _validadeName(data.name);
-      const validatCpf = _validarCPF(data.cpf);
 
       if (findCpf) {
+        setLoad(false);
         return Alert.alert("Erro", "Candidato ja registrado");
       }
 
       if (!validName) {
+        setLoad(false);
         return Alert.alert("Erro", "Digite seu nome completo");
       }
-
-      // if (!validatCpf) {
-      //   return Alert.alert("Erro", "CPF inválido");
-      // }
 
       if (
         name === "" ||
@@ -174,22 +185,32 @@ export function Steps() {
         localy === "" ||
         email === ""
       ) {
+        setLoad(false);
         return Alert.alert("Erro", "Preencha todo o formulário");
       }
 
-      if (expRemada === "" && expTow === "") {
+      if (filCategoryA.length > 0 && expTow === "") {
+        setLoad(false);
+        return Alert.alert("Erro", "Informe sua experiência");
+      }
+
+      if (filCategoryB.length > 0 && expRemada === "") {
+        setLoad(false);
         return Alert.alert("Erro", "Informe sua experiência");
       }
 
       if (selectCategory.length === 0) {
+        setLoad(false);
         return Alert.alert("Erro", "Selecione um categoria");
       }
 
       if (sex === "") {
+        setLoad(false);
         return Alert.alert("Erro", "Informe o seu sexo");
       }
 
       if (image === null) {
+        setLoad(false);
         return Alert.alert("Erro", "Faça o upload de uma imagem");
       }
 
@@ -198,6 +219,7 @@ export function Steps() {
       // }
 
       if (birthday.length < 8) {
+        setLoad(false);
         return Alert.alert("Erro", "Data de aniversário inválido");
       }
 
@@ -247,6 +269,7 @@ export function Steps() {
             navigate("HOME");
           });
       } catch (err) {
+        setLoad(false);
         if (err instanceof Yup.ValidationError) {
           const errors = getValidationErrors(err);
           ref.current?.setErrors(errors);
@@ -280,20 +303,6 @@ export function Steps() {
       setShowModal(false);
     }
   }, [regulamento]);
-
-  const filCategoryA = selectCategory.filter((h) => {
-    if (h.type.includes("TOW IN")) {
-      return h;
-    }
-  });
-
-  const filCategoryB = selectCategory.filter((h) => {
-    if (h.id === "2") {
-      return h;
-    }
-  });
-
-  console.log("cat", filCategoryA);
 
   return (
     <S.box>
@@ -447,56 +456,6 @@ export function Steps() {
               </Box>
             )}
 
-            {/* {filCategoryA.length > 1 && (
-              <Box>
-                <S.subText>
-                  Experiência prévia no surf de tow in em ondas grande ou lajes
-                </S.subText>
-
-                <Selection
-                  pres={() => setExpTow("BASICA")}
-                  select={expTow === "BASICA"}
-                  text="básica"
-                  variant="secundary"
-                />
-                <Selection
-                  pres={() => setExpTow("INTERMEDIARIA")}
-                  select={expTow === "INTERMEDIARIA"}
-                  text="intermediária"
-                  variant="secundary"
-                />
-                <Selection
-                  pres={() => setExpTow("AVANÇADA")}
-                  select={expTow === "AVANÇADA"}
-                  text="avançada"
-                  variant="secundary"
-                />
-
-                <S.subText style={{ marginTop: 20 }}>
-                  Experiência prévia em pilotagem de jet ski no tow in
-                </S.subText>
-
-                <Selection
-                  pres={() => setExpRemada("BASICA")}
-                  select={expRemada === "BASICA"}
-                  text="básica"
-                  variant="secundary"
-                />
-                <Selection
-                  pres={() => setExpRemada("INTERMEDIARIA")}
-                  select={expRemada === "INTERMEDIARIA"}
-                  text="intermediária"
-                  variant="secundary"
-                />
-                <Selection
-                  pres={() => setExpRemada("AVANÇADA")}
-                  select={expRemada === "AVANÇADA"}
-                  text="avançada"
-                  variant="secundary"
-                />
-              </Box>
-            )} */}
-
             <S.subText style={{ marginTop: 30 }}>
               Faça upload de foto para indentificação
             </S.subText>
@@ -544,7 +503,11 @@ export function Steps() {
             </S.boxSelect>
 
             <Center>
-              <Buttom pres={() => ref.current?.submitForm()} nome="FINALIZAR" />
+              <Buttom
+                load={load}
+                pres={() => ref.current?.submitForm()}
+                nome="FINALIZAR"
+              />
             </Center>
           </S.form>
 

@@ -14,7 +14,7 @@ interface Props {
 }
 
 export function PassComp({ data }: Props) {
-  const name = data.name.split(" ").map(String);
+  const [nome, sobrenome] = data.name?.split(" ").map(String);
   const date = data.created_at.split(" - ").map(String);
 
   const [modal, setModal] = React.useState(false);
@@ -54,7 +54,7 @@ export function PassComp({ data }: Props) {
             </S.boxImage>
 
             <S.subTitle>
-              {name[0]} {name[2]}
+              {nome} {sobrenome}
             </S.subTitle>
           </S.contentImage>
 
