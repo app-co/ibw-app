@@ -67,7 +67,7 @@ export function date(e: string) {
   value = value.replace(/\D/g, "");
   value = value.replace(
     /(\d{2})(\d{1,2})?(\d{1,4})?/,
-    function (match, p1, p2, p3, p4) {
+    function (match, p1, p2, p3) {
       if (p2 === undefined) {
         return p1;
       }

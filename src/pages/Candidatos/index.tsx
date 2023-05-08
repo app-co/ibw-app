@@ -31,13 +31,37 @@ export function Candidatos() {
   }, []);
 
   const handleLinking = React.useCallback(async () => {
-    Link.openURL("http://ibw-web.app");
+    Link.openURL("https://ibw-web.vercel.app");
   }, []);
 
   const list =
     search !== ""
       ? response.filter((h) => h.name.includes(search.toUpperCase()))
       : response;
+
+  const candidatos = React.useMemo(() => {
+    // 08/05/2023 - 16:01  "08/05/2023 - 16:2
+    return list
+      .map((h) => {
+        const [dia, mes, ano] = h.created_at
+          .slice(0, 10)
+          .split("/")
+          .map(Number);
+        const dateS = new Date(ano, mes, dia).getTime();
+        const dateN = new Date().getTime();
+        return {
+          ...h,
+          dateS,
+          dateN,
+        };
+      })
+      .sort((a, b) => {
+        if (a.dateS > b.dateS) {
+          return -1;
+        }
+        return 1;
+      });
+  }, [list]);
 
   const handleUpdate = React.useCallback(async (id: string) => {
     fire().collection("inscricao").doc(id).update({
@@ -75,7 +99,7 @@ export function Candidatos() {
       </Box>
 
       <FlatList
-        data={list}
+        data={candidatos}
         keyExtractor={(h) => h.id}
         renderItem={({ item: h }) => (
           <CandidatoComp

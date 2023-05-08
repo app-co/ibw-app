@@ -24,16 +24,16 @@ export interface ILive {
 }
 
 export interface IUserInc {
-  id?: string;
-  name?: string;
-  cpf?: string;
-  email?: string;
-  brithday?: string;
-  sexo?: "M" | "F";
-  category?: { type: string; exp: string }[];
-  expTow?: string;
-  expRemada?: string;
-  photo?: string;
+  id: string;
+  name: string;
+  cpf: string;
+  email: string;
+  brithday: string;
+  sexo: "M" | "F";
+  category: { type: string; exp: string }[];
+  expTow: string;
+  expRemada: string;
+  photo: string;
   created_at: string;
   status: string;
   user_id: string;

@@ -75,7 +75,7 @@ interface Credentials {
 export function Steps() {
   const { user } = useAuth();
   const ref = useRef<FormHandles>(null);
-  const { navigate } = useNavigation();
+  const { navigate, reset } = useNavigation();
   const [load, setLoad] = React.useState(false);
 
   const [expTow, setExpTow] = React.useState("");
@@ -224,11 +224,18 @@ export function Steps() {
       }
 
       const cat = selectCategory.map((h) => {
-        const exp =
-          h.type === "TOW IN LAJE DO SHOCK - SURFISTA" ? expTow : expRemada;
+        let exp = "";
+
+        if (h.id === "1" || h.id === "3") {
+          exp = expTow;
+        }
+
+        if (h.id === "2") {
+          exp = expRemada;
+        }
 
         return {
-          type: h.type,
+          ...h,
           exp,
         };
       });
@@ -253,7 +260,7 @@ export function Steps() {
           expRemada,
           status: "Inscrição solicitada",
           created_at: format(new Date(), "dd/MM/yyyy - HH:mm"),
-          user_id: user.id,
+          user_id: user?.id,
           event_id,
         };
 
@@ -266,6 +273,9 @@ export function Steps() {
               "Agradecemos o envio da solicitação de inscrição. Os requsitos de participação serão verificados e em até 3 dias você será informado do status da sua inscricão consultando seu passaporte no menu principal do aplicativo."
             );
             setLoad(false);
+            reset({
+              routes: [{ name: "steps" }],
+            });
             navigate("HOME");
           });
       } catch (err) {
