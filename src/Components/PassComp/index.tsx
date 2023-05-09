@@ -3,6 +3,7 @@ import { DrawerPosition, Image, Modal, TouchableOpacity } from "react-native";
 import { Box, Center } from "native-base";
 import Linear from "expo-linear-gradient";
 import { Feather } from "@expo/vector-icons";
+import { format } from "date-fns";
 import * as S from "./styles";
 import bg from "../../assets/bx.png";
 import { IUserInc } from "../../dtos";
@@ -14,8 +15,8 @@ interface Props {
 }
 
 export function PassComp({ data }: Props) {
-  const [nome, sobrenome] = data.name?.split(" ").map(String);
-  const date = data.created_at.split(" - ").map(String);
+  const [nome, sobrenome] = data.name.split(" ").map(String);
+  const date = format(Number(data.created_at), "dd/MM/yy - HH:mm");
 
   const [modal, setModal] = React.useState(false);
 
@@ -64,7 +65,7 @@ export function PassComp({ data }: Props) {
               {/* <Image source={logo} style={{ width: 60, height: 60 }} /> */}
               {/* <S.title>2023</S.title> */}
             </S.bxRow>
-            <S.subTitle>Data de Inscrição: {date[0]}</S.subTitle>
+            <S.subTitle>Data de Inscrição: {date}</S.subTitle>
 
             <S.bxRow>
               <S.subTitle>Status: </S.subTitle>
@@ -80,7 +81,7 @@ export function PassComp({ data }: Props) {
                 {data.status}{" "}
               </S.subTitle>
 
-              {data?.status === "INSCRIÇÃO SOLICITADA" && (
+              {data?.status === "Inscrição solicitada" && (
                 <TouchableOpacity
                   onPress={() => setModal(true)}
                   style={{ padding: 4 }}

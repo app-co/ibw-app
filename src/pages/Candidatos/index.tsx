@@ -41,26 +41,12 @@ export function Candidatos() {
 
   const candidatos = React.useMemo(() => {
     // 08/05/2023 - 16:01  "08/05/2023 - 16:2
-    return list
-      .map((h) => {
-        const [dia, mes, ano] = h.created_at
-          .slice(0, 10)
-          .split("/")
-          .map(Number);
-        const dateS = new Date(ano, mes, dia).getTime();
-        const dateN = new Date().getTime();
-        return {
-          ...h,
-          dateS,
-          dateN,
-        };
-      })
-      .sort((a, b) => {
-        if (a.dateS > b.dateS) {
-          return -1;
-        }
-        return 1;
-      });
+    return list.sort((a, b) => {
+      if (a.created_at > b.created_at) {
+        return -1;
+      }
+      return 1;
+    });
   }, [list]);
 
   const handleUpdate = React.useCallback(async (id: string) => {

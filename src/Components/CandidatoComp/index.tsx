@@ -1,5 +1,6 @@
 import React from "react";
 import { Image } from "native-base";
+import { format } from "date-fns";
 import { IUserInc } from "../../dtos";
 import theme from "../../global/styles/theme";
 import * as S from "./styles";
@@ -11,6 +12,7 @@ interface Props {
 }
 
 export function CandidatoComp({ item, pres, reprovar }: Props) {
+  console.log(item.birthday);
   return (
     <S.Container>
       <S.bx>
@@ -30,7 +32,7 @@ export function CandidatoComp({ item, pres, reprovar }: Props) {
 
       <S.bx>
         <S.title>Data de nascimento: </S.title>
-        <S.sub>{item?.brithday}</S.sub>
+        <S.sub>{item.birthday}</S.sub>
       </S.bx>
 
       <S.bx>
@@ -59,13 +61,16 @@ export function CandidatoComp({ item, pres, reprovar }: Props) {
           key={p.type}
         >
           <S.sub>{p.type}</S.sub>
-          <S.title>EXPERIÊNCIA: {p.exp}</S.title>
+
+          {p.type !== "BODYBOARDING" && p.type !== "CINEGRAFISTA" && (
+            <S.title>EXPERIÊNCIA: {p.exp}</S.title>
+          )}
         </S.bx>
       ))}
 
       <S.bx>
         <S.title>Data de Inscriçao: </S.title>
-        <S.sub>{item?.created_at}</S.sub>
+        <S.sub>{format(Number(item?.created_at), "dd/MM/yy - HH:mm")}</S.sub>
       </S.bx>
 
       <S.bx>

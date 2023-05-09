@@ -28,7 +28,7 @@ export interface IUserInc {
   name: string;
   cpf: string;
   email: string;
-  brithday: string;
+  birthday: string;
   sexo: "M" | "F";
   category: { type: string; exp: string }[];
   expTow: string;

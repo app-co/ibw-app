@@ -14,7 +14,7 @@ import * as ImagePicker from "expo-image-picker";
 import Yup from "yup";
 import fire from "@react-native-firebase/firestore";
 import { useNavigation } from "@react-navigation/native";
-import { format, getYear } from "date-fns";
+import { format, getTime, getYear } from "date-fns";
 import storage from "@react-native-firebase/storage";
 import { Buttom } from "../../Components/Buttom";
 import { Input } from "../../Components/FormInput";
@@ -256,10 +256,8 @@ export function Steps() {
           sexo: sex,
           category: cat,
           photo: photoUrl,
-          expTow,
-          expRemada,
           status: "Inscrição solicitada",
-          created_at: format(new Date(), "dd/MM/yyyy - HH:mm"),
+          created_at: getTime(new Date()),
           user_id: user?.id,
           event_id,
         };
