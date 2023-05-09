@@ -27,7 +27,15 @@ export function PassPort() {
   }, []);
 
   const pass = React.useMemo(() => {
-    return response.filter((h) => h.user_id === user.id);
+    return response
+      .filter((h) => h.user_id === user?.id)
+      .sort((a, b) => {
+        if (a.created_at > b.created_at) {
+          return -1;
+        }
+
+        return 1;
+      });
   }, [response, user]);
 
   return (
