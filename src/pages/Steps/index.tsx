@@ -89,6 +89,7 @@ export function Steps() {
   const [page, setPage] = React.useState(0);
 
   const [resonse, setResponse] = React.useState<IUserInc[]>([]);
+  const [modalSucces, setModalSucces] = React.useState(false);
 
   const toggleSecectionCategory = useCallback(
     (item: ICategory) => {
@@ -266,15 +267,8 @@ export function Steps() {
           .collection("inscricao")
           .add(dados)
           .then((h) => {
-            Alert.alert(
-              ".",
-              "Agradecemos o envio da solicitação de inscrição. Os requsitos de participação serão verificados e em até 3 dias você será informado do status da sua inscricão consultando seu passaporte no menu principal do aplicativo."
-            );
             setLoad(false);
-            reset({
-              routes: [{ name: "steps" }],
-            });
-            navigate("HOME");
+            setModalSucces(true);
           });
       } catch (err) {
         setLoad(false);
@@ -311,6 +305,14 @@ export function Steps() {
       setShowModal(false);
     }
   }, [regulamento]);
+
+  const closedModalSucces = React.useCallback(async () => {
+    setModalSucces(false);
+    reset({
+      routes: [{ name: "steps" }],
+    });
+    navigate("HOME");
+  }, [navigate, reset]);
 
   return (
     <S.box>
@@ -350,6 +352,20 @@ export function Steps() {
               />
             </S.boxSelect>
           )}
+        </Modal>
+
+        <Modal visible={modalSucces}>
+          <S.sucessBox>
+            <S.sucessTitle>INSCRIÇÃO REALIZADA COM SUCESSO!</S.sucessTitle>
+            <S.sucessText>
+              Agradecemos o envio da solicitação de inscrição. Os requsitos de
+              participação serão verificados e em até 3 dias você será informado
+              do status da sua inscricão consultando seu passaporte no menu
+              principal do aplicativo.
+            </S.sucessText>
+
+            <Buttom nome="OK" pres={closedModalSucces} />
+          </S.sucessBox>
         </Modal>
 
         <S.title style={{ alignSelf: "center" }}>

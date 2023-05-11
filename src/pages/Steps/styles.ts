@@ -111,3 +111,26 @@ export const boxCancel = styled.View`
   padding: 20px;
   align-self: flex-end;
 `;
+
+export const sucessBox = styled.View`
+  flex: 1;
+  background-color: ${theme.colors.primary[3]};
+
+  align-items: center;
+  justify-content: center;
+`;
+
+export const sucessTitle = styled.Text`
+  font-size: ${RFValue(20)}px;
+  text-align: center;
+  font-family: ${theme.fonts.Bold};
+  color: ${theme.colors.focus[1]};
+`;
+
+export const sucessText = styled.Text`
+  font-size: ${RFValue(16)}px;
+  text-align: center;
+  font-family: ${theme.fonts.Bold};
+  color: #fff;
+  margin-top: 10px;
+`;
