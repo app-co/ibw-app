@@ -1,5 +1,6 @@
 declare module "@env" {
-  export const ONE_SIGNAL_SDK_ID_ANDROID: string;
+  export const ONE_SIGNAL_ID_ANDROID: string;
+  export const ONE_SIGNAL_ID_IOS: string;
   export const ONE_SIGNAL_MODE: string;
   export const ONE_SIGNAL_REST_API: string;
   // export const ANDROID_CLIENT_ID: string;

@@ -3,7 +3,7 @@
 import { StatusBar } from "expo-status-bar";
 import Updates from "expo-updates";
 import React, { useEffect } from "react";
-import { AppState, LogBox, View } from "react-native";
+import { AppState, LogBox, Platform, View } from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
 import AppLoading from "expo-app-loading";
 import * as WebBrowser from "expo-web-browser";
@@ -15,7 +15,7 @@ import {
 import { NativeBaseProvider } from "native-base";
 import * as Notifications from "expo-notifications";
 import OneSignal from "react-native-onesignal";
-import { ONE_SIGNAL_SDK_ID_ANDROID } from "@env";
+import { ONE_SIGNAL_ID_IOS, ONE_SIGNAL_SDK_ID_ANDROID } from "@env";
 import { Route } from "./src/routes";
 import AppProvider from "./src/hooks";
 import { ModalUpdate } from "./src/Components/ModalUpdate";
@@ -31,7 +31,10 @@ Notifications.setNotificationHandler({
   }),
 });
 
-OneSignal.setAppId(ONE_SIGNAL_SDK_ID_ANDROID);
+const oneSignalId =
+  Platform.OS === "ios" ? ONE_SIGNAL_ID_IOS : ONE_SIGNAL_SDK_ID_ANDROID;
+
+OneSignal.setAppId(oneSignalId);
 
 export default function App() {
   LogBox.ignoreLogs([`Setting a timer for a long period`]);
