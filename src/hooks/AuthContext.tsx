@@ -16,12 +16,7 @@ import FireStore from "@react-native-firebase/firestore";
 import Auth from '@react-native-firebase/auth'
 import { IUsersDto } from "../dtos";
 
-export interface User {
-  id: string;
-  nome: string;
-  adm: boolean;
-  padrinhQuantity: number;
-}
+
 
 interface SignInCred {
   email: string;
@@ -34,18 +29,16 @@ interface AuthContexData {
   signIn(credential: SignInCred): Promise<void>;
   signOut(): void;
   updateUser(user: IUsersDto): Promise<void>;
-  listUser: IUsersDto[] | null;
 }
 
-const User_Collection = "@Geb:user";
+const User_Collection = "@ibw:user";
 
 export const AuthContext = createContext<AuthContexData>({} as AuthContexData);
 
-export const AuthProvider: React.FC = ({ children }) => {
+export function AuthProvider({ children }: any) {
   const [loading, setLoading] = useState(true);
   const [user, setUser] = useState<IUsersDto | null>(null);
 
-  const [listUser, setListUser] = useState<IUsersDto[]>([]);
 
   const LoadingUser = useCallback(async () => {
     setLoading(true);
@@ -64,9 +57,8 @@ export const AuthProvider: React.FC = ({ children }) => {
     LoadingUser();
   }, [LoadingUser]);
 
-     
 
-  const signIn = useCallback(async ({ email, senha }) => {
+  const signIn = useCallback(async ({ email, senha }: SignInCred) => {
 
     Auth().signInWithEmailAndPassword(email, senha)
       .then(au => {
@@ -78,7 +70,8 @@ export const AuthProvider: React.FC = ({ children }) => {
             const {
               nome,
               avatar,
-              adm
+              adm,
+              token
 
             } = profile.data() as IUsersDto;
 
@@ -88,7 +81,8 @@ export const AuthProvider: React.FC = ({ children }) => {
                 id: au.user.uid,
                 nome,
                 avatar,
-                adm
+                adm,
+                token
               };
               await AsyncStorage.setItem(
                 User_Collection,
@@ -144,7 +138,6 @@ export const AuthProvider: React.FC = ({ children }) => {
         signIn,
         signOut,
         updateUser,
-        listUser,
       }}
     >
       {children}

@@ -33,7 +33,13 @@
       "favicon": "./assets/favicon.png"
     },
     "plugins": [
-      "@react-native-firebase/app"
+      "@react-native-firebase/app",
+      ["expo-notifications", {
+        "color": "#c8c8c8"
+      }],
+      ["onesignal-expo-plugin", {
+        "mode": "development"
+      }]
     ],
     "extra": {
       "eas": {

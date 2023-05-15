@@ -6,6 +6,7 @@ export interface IUsersDto {
   avatar: string | null;
   adm: boolean;
   senha?: string;
+  token?: string;
 }
 
 export interface INewsDto {
@@ -37,4 +38,5 @@ export interface IUserInc {
   created_at: string;
   status: string;
   user_id: string;
+  token: string;
 }

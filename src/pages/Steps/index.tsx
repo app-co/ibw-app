@@ -19,7 +19,7 @@ import storage from "@react-native-firebase/storage";
 import { Buttom } from "../../Components/Buttom";
 import { Input } from "../../Components/FormInput";
 import { Selection } from "../../Components/Selection";
-import { IUserInc } from "../../dtos";
+import { IUserInc, IUsersDto } from "../../dtos";
 import { useAuth } from "../../hooks/AuthContext";
 import * as S from "./styles";
 import getValidationErrors from "../../utils/getValidationErrors";
@@ -28,6 +28,7 @@ import { Header } from "../../Components/Header";
 import { Contrato } from "../../Components/Contrato";
 import theme from "../../global/styles/theme";
 import { _validadeName, _validarCPF } from "../../utils/validation";
+import { sendPushNotification } from "../../notifications/sendNotification";
 
 type IExp = "INTERMEDIÁIA" | "BÁSICA" | "AVANÇADA" | "";
 
@@ -113,7 +114,7 @@ export function Steps() {
     const result = await ImagePicker.launchImageLibraryAsync({
       mediaTypes: ImagePicker.MediaTypeOptions.All,
       allowsEditing: true,
-      aspect: [3, 4],
+      aspect: [3, 3],
       quality: 1,
     });
 
@@ -260,6 +261,7 @@ export function Steps() {
           status: "Inscrição solicitada",
           created_at: getTime(new Date()),
           user_id: user?.id,
+          token: user?.token,
           event_id,
         };
 
@@ -271,32 +273,32 @@ export function Steps() {
             setModalSucces(true);
           });
       } catch (err) {
+        console.log(err);
         setLoad(false);
         if (err instanceof Yup.ValidationError) {
           const errors = getValidationErrors(err);
           ref.current?.setErrors(errors);
           Alert.alert(err.message);
+        } else {
+          Alert.alert(
+            "Erro",
+            "Estomos com problemas no servidor, tente novamente mais tarde."
+          );
         }
-
-        Alert.alert(
-          "Erro",
-          "Estomos com problemas no servidor, tente novamente mais tarde."
-        );
-
-        setLoad(false);
       }
     },
     [
       event_id,
       expRemada,
       expTow,
+      filCategoryA,
+      filCategoryB,
       image,
-      navigate,
       regulamento,
       resonse,
       selectCategory,
       sex,
-      user.id,
+      user,
     ]
   );
 
@@ -307,7 +309,27 @@ export function Steps() {
   }, [regulamento]);
 
   const closedModalSucces = React.useCallback(async () => {
-    setModalSucces(false);
+    // setModalSucces(false);
+    const title = "NOVA INSCRIÇÃO";
+    const text = "Nova inscrição realizado no ibw.";
+
+    fire()
+      .collection("users")
+      .get()
+      .then((h) => {
+        const rs = h.docs.map((p) => p.data() as IUsersDto);
+        const token: string[] = [];
+
+        rs.forEach((p) => {
+          if (p.adm === true && p.token !== "null") {
+            const tk = p.token;
+            token.push(tk);
+          }
+        });
+
+        sendPushNotification({ title, text, token });
+      });
+
     reset({
       routes: [{ name: "steps" }],
     });
@@ -341,7 +363,7 @@ export function Steps() {
             </S.text>
           </S.boxSelect>
 
-          <Contrato page={page} item={(h) => setPage(h)} />
+          <Contrato page={14} item={(h) => setPage(h)} />
 
           {page === 14 && (
             <S.boxSelect style={{ backgroundColor: theme.colors.secundary[1] }}>

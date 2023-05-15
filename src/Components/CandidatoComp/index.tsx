@@ -12,7 +12,7 @@ interface Props {
 }
 
 export function CandidatoComp({ item, pres, reprovar }: Props) {
-  console.log(item.birthday);
+  console.log(item.created_at);
   return (
     <S.Container>
       <S.bx>

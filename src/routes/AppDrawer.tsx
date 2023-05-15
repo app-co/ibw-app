@@ -14,6 +14,7 @@ import { Isncricao } from "../pages/Isncricao";
 import { SteckInscricao } from "./StackIncricao";
 import { PassPort } from "../pages/PassPort";
 import { Candidatos } from "../pages/Candidatos";
+import { Teste } from "../pages/teste";
 
 const Drawer = createDrawerNavigator();
 
@@ -36,6 +37,7 @@ const AppDrawer: React.FC = () => {
       <Drawer.Screen name="QUEM SOMOS" component={Us} />
       <Drawer.Screen name="INSCRIÇÃO NO IBW" component={SteckInscricao} />
       <Drawer.Screen name="PASSAPORTE DE INSCRIÇÃO" component={PassPort} />
+      <Drawer.Screen name="Teste" component={Teste} />
       {user.adm && <Drawer.Screen name="ADICIONAR EVENTO" component={News} />}
       <Drawer.Screen name="INSCRIÇÕES" component={Candidatos} />
     </Drawer.Navigator>

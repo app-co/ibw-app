@@ -8,6 +8,7 @@ import Firebase from "@react-native-firebase/firestore";
 import { useFocusEffect, useNavigation } from "@react-navigation/native";
 import { Box, Center, Text, Button as ButomBase } from "native-base";
 import * as Updates from "expo-updates";
+import OneSignal from "react-native-onesignal";
 import {
   BoxPlayer,
   BoxText,
@@ -21,15 +22,16 @@ import { sizeH, sizeW } from "../../utils";
 import { ButtonFlutuante } from "../../Components/ButtonFlutuante";
 import { Live } from "../AMD/Live";
 import { Header } from "../../Components/Header";
-import { ILive } from "../../dtos";
+import { ILive, IUsersDto } from "../../dtos";
 import fundo from "../../assets/fundo1-onda.png";
 import theme from "../../global/styles/theme";
+import { tagsId } from "../../notifications/tags";
 
 export function Home() {
   const modalRef = useRef<Modalize>(null);
 
   //* * ESTADOS ................................................................
-  const { user } = useAuth();
+  const { user, updateUser } = useAuth();
   const [playing, setPlaying] = useState(false);
   const [data, setData] = useState<ILive>(null);
   const [load, setLoad] = useState(true);
@@ -46,10 +48,10 @@ export function Home() {
   }, []);
 
   const CloseModal = useCallback(() => {
-    modalRef.current.close();
+    modalRef.current?.close();
   }, []);
 
-  const onStateChange = useCallback((state) => {
+  const onStateChange = useCallback((state: any) => {
     if (state === "ended") {
       setPlaying(false);
       Alert.alert("video has finished playing!");
@@ -77,6 +79,21 @@ export function Home() {
           setData(null);
         }
       });
+
+    await OneSignal.getDeviceState().then((h) => {
+      const token = h?.userId ? h.userId : "";
+
+      Firebase().collection("users").doc(user?.id).update({
+        token,
+      });
+
+      const dt = {
+        ...user,
+        token,
+      } as IUsersDto;
+
+      updateUser(dt);
+    });
   }, []);
 
   useEffect(() => {
@@ -126,20 +143,18 @@ export function Home() {
           </Box>
         </Center>
       ) : (
-        <>
-          <BoxPlayer>
-            <YoutubePlayer
-              height={sizeH(0.3)}
-              width={sizeW(1)}
-              videoId={data.video}
-              onChangeState={onStateChange}
-            />
-            <BoxText>
-              <Title>{data.title}</Title>
-              <TitleDesciption>{data.descricao}</TitleDesciption>
-            </BoxText>
-          </BoxPlayer>
-        </>
+        <BoxPlayer>
+          <YoutubePlayer
+            height={sizeH(0.3)}
+            width={sizeW(1)}
+            videoId={data.video}
+            onChangeState={onStateChange}
+          />
+          <BoxText>
+            <Title>{data.title}</Title>
+            <TitleDesciption>{data.descricao}</TitleDesciption>
+          </BoxText>
+        </BoxPlayer>
       )}
       {user.adm && <ButtonFlutuante pres={OpenModal} />}
 

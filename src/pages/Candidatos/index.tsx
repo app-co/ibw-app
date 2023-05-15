@@ -10,6 +10,7 @@ import * as S from "./styles";
 import { Input } from "../../Components/FormInput";
 import { Buttom } from "../../Components/Buttom";
 import { Header } from "../../Components/Header";
+import { sendPushNotification } from "../../notifications/sendNotification";
 
 export function Candidatos() {
   const [response, setResponse] = React.useState<IUserInc[]>([]);
@@ -49,16 +50,35 @@ export function Candidatos() {
     });
   }, [list]);
 
-  const handleUpdate = React.useCallback(async (id: string) => {
-    fire().collection("inscricao").doc(id).update({
-      status: "INSCRIÇÃO APROVADA",
-    });
+  const handleUpdate = React.useCallback(async (id: string, token: string) => {
+    fire()
+      .collection("inscricao")
+      .doc(id)
+      .update({
+        status: "INSCRIÇÃO APROVADA",
+      })
+      .then(() => {
+        const title = "INSCIÇÃO IBW 2023";
+        const tk: string[] = [token];
+        const text =
+          "Parabens, sua inscrição foi aprovada. Confira o status do seu passaporte no aplicativo";
+        sendPushNotification({ title, text, token: tk });
+      });
   }, []);
 
-  const reprove = React.useCallback(async (id: string) => {
-    fire().collection("inscricao").doc(id).update({
-      status: "INSCRIÇÃO REPROVADA",
-    });
+  const reprove = React.useCallback(async (id: string, token: string) => {
+    fire()
+      .collection("inscricao")
+      .doc(id)
+      .update({
+        status: "INSCRIÇÃO REPROVADA",
+      })
+      .then(() => {
+        const title = "INSCIÇÃO IBW 2023";
+        const tk: string[] = [token];
+        const text = "Inscrição reprovada, consulte no administrativo";
+        sendPushNotification({ title, text, token: tk });
+      });
   }, []);
 
   return (
@@ -89,8 +109,8 @@ export function Candidatos() {
         keyExtractor={(h) => h.id}
         renderItem={({ item: h }) => (
           <CandidatoComp
-            reprovar={() => reprove(h.id)}
-            pres={() => handleUpdate(h.id)}
+            reprovar={() => reprove(h.id, h.token)}
+            pres={() => handleUpdate(h.id, h.token)}
             item={h}
           />
         )}

@@ -14,30 +14,31 @@ import {
 } from "@expo-google-fonts/monda";
 import { NativeBaseProvider } from "native-base";
 import * as Notifications from "expo-notifications";
+import OneSignal from "react-native-onesignal";
+import { ONE_SIGNAL_SDK_ID_ANDROID } from "@env";
 import { Route } from "./src/routes";
 import AppProvider from "./src/hooks";
-import { Splash } from "./src/pages/Splash";
-import { Loading } from "./src/pages/Loading";
 import { ModalUpdate } from "./src/Components/ModalUpdate";
+import { tagsUserEmail } from "./src/notifications/tags";
 
 WebBrowser.maybeCompleteAuthSession();
 
 Notifications.setNotificationHandler({
   handleNotification: async () => ({
     shouldShowAlert: true,
-    shouldPlaySound: false,
+    shouldPlaySound: true,
     shouldSetBadge: false,
   }),
 });
 
+OneSignal.setAppId(ONE_SIGNAL_SDK_ID_ANDROID);
+
 export default function App() {
   LogBox.ignoreLogs([`Setting a timer for a long period`]);
+
   const [showModalUpdate, setModalUpdates] = React.useState(false);
 
-  // ** SERVICES MESSAGENS ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-  // useEffect(() => {
-  //   registerForPushNotificationsAsync();
-  // }, []);
+  // SERVICES MESSAGENS ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
   //* * UPDATE APLICATION ....................................................
 
