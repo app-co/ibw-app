@@ -28,7 +28,10 @@ import { Header } from "../../Components/Header";
 import { Contrato } from "../../Components/Contrato";
 import theme from "../../global/styles/theme";
 import { _validadeName, _validarCPF } from "../../utils/validation";
-import { sendPushNotification } from "../../notifications/sendNotification";
+import {
+  sendExpoPushNotification,
+  sendPushNotification,
+} from "../../notifications/sendNotification";
 
 type IExp = "INTERMEDIÁIA" | "BÁSICA" | "AVANÇADA" | "";
 
@@ -318,16 +321,13 @@ export function Steps() {
       .get()
       .then((h) => {
         const rs = h.docs.map((p) => p.data() as IUsersDto);
-        const token: string[] = [];
 
         rs.forEach((p) => {
           if (p.adm === true && p.token !== "null") {
-            const tk = p.token;
-            token.push(tk);
+            const tk = p.token!;
+            sendExpoPushNotification({ title, text, token: tk });
           }
         });
-
-        sendPushNotification({ title, text, token });
       });
 
     reset({
@@ -363,7 +363,7 @@ export function Steps() {
             </S.text>
           </S.boxSelect>
 
-          <Contrato page={14} item={(h) => setPage(h)} />
+          <Contrato page={page} item={(h) => setPage(h)} />
 
           {page === 14 && (
             <S.boxSelect style={{ backgroundColor: theme.colors.secundary[1] }}>

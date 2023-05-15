@@ -36,10 +36,8 @@
       "@react-native-firebase/app",
       ["expo-notifications", {
         "color": "#c8c8c8"
-      }],
-      ["onesignal-expo-plugin", {
-        "mode": "production"
       }]
+  
     ],
     "extra": {
       "eas": {

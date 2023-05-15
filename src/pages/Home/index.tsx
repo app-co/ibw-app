@@ -26,6 +26,7 @@ import { ILive, IUsersDto } from "../../dtos";
 import fundo from "../../assets/fundo1-onda.png";
 import theme from "../../global/styles/theme";
 import { tagsId } from "../../notifications/tags";
+import { registerToken } from "../../notifications/sendNotification";
 
 export function Home() {
   const modalRef = useRef<Modalize>(null);
@@ -80,20 +81,33 @@ export function Home() {
         }
       });
 
-    await OneSignal.getDeviceState().then((h) => {
-      const token = h?.userId ? h.userId : "";
+    // await OneSignal.getDeviceState().then((h) => {
+    //   const token = h?.userId ? h.userId : "";
 
-      Firebase().collection("users").doc(user?.id).update({
-        token,
-      });
+    //   Firebase().collection("users").doc(user?.id).update({
+    //     token,
+    //   });
 
-      const dt = {
-        ...user,
-        token,
-      } as IUsersDto;
+    //   const dt = {
+    //     ...user,
+    //     token,
+    //   } as IUsersDto;
 
-      updateUser(dt);
+    //   updateUser(dt);
+    // });
+
+    const token = await registerToken();
+
+    Firebase().collection("users").doc(user?.id).update({
+      token,
     });
+
+    const dt = {
+      ...user,
+      token,
+    } as IUsersDto;
+
+    updateUser(dt);
   }, []);
 
   useEffect(() => {

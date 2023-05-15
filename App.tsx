@@ -31,10 +31,10 @@ Notifications.setNotificationHandler({
   }),
 });
 
-const oneSignalId =
-  Platform.OS === "ios" ? ONE_SIGNAL_ID_IOS : ONE_SIGNAL_SDK_ID_ANDROID;
+// const oneSignalId =
+//   Platform.OS === "ios" ? ONE_SIGNAL_ID_IOS : ONE_SIGNAL_SDK_ID_ANDROID;
 
-OneSignal.setAppId(oneSignalId);
+// OneSignal.setAppId(oneSignalId);
 
 export default function App() {
   LogBox.ignoreLogs([`Setting a timer for a long period`]);
