@@ -38,7 +38,7 @@
         "color": "#c8c8c8"
       }],
       ["onesignal-expo-plugin", {
-        "mode": "development"
+        "mode": "production"
       }]
     ],
     "extra": {
