@@ -1,6 +1,3 @@
-import { ONE_SIGNAL_REST_API, ONE_SIGNAL_SDK_ID_ANDROID } from "@env";
-import axios from "axios";
-import OneSignal from "react-native-onesignal";
 import * as Notifications from "expo-notifications";
 import * as Device from "expo-device";
 import { Platform } from "react-native";
@@ -72,7 +69,6 @@ export async function registerToken() {
       return;
     }
     token = (await Notifications.getExpoPushTokenAsync()).data;
-    console.log(token);
   } else {
     alert("Must use physical device for Push Notifications");
   }

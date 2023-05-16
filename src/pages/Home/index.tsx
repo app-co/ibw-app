@@ -8,7 +8,6 @@ import Firebase from "@react-native-firebase/firestore";
 import { useFocusEffect, useNavigation } from "@react-navigation/native";
 import { Box, Center, Text, Button as ButomBase } from "native-base";
 import * as Updates from "expo-updates";
-import OneSignal from "react-native-onesignal";
 import {
   BoxPlayer,
   BoxText,
@@ -25,7 +24,6 @@ import { Header } from "../../Components/Header";
 import { ILive, IUsersDto } from "../../dtos";
 import fundo from "../../assets/fundo1-onda.png";
 import theme from "../../global/styles/theme";
-import { tagsId } from "../../notifications/tags";
 import { registerToken } from "../../notifications/sendNotification";
 
 export function Home() {
@@ -97,6 +95,7 @@ export function Home() {
     // });
 
     const token = await registerToken();
+    console.log(token);
 
     Firebase().collection("users").doc(user?.id).update({
       token,

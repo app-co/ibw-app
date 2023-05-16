@@ -14,12 +14,9 @@ import {
 } from "@expo-google-fonts/monda";
 import { NativeBaseProvider } from "native-base";
 import * as Notifications from "expo-notifications";
-import OneSignal from "react-native-onesignal";
-import { ONE_SIGNAL_ID_IOS, ONE_SIGNAL_SDK_ID_ANDROID } from "@env";
 import { Route } from "./src/routes";
 import AppProvider from "./src/hooks";
 import { ModalUpdate } from "./src/Components/ModalUpdate";
-import { tagsUserEmail } from "./src/notifications/tags";
 
 WebBrowser.maybeCompleteAuthSession();
 
