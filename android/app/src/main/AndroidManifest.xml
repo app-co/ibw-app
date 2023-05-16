@@ -30,7 +30,6 @@
         <category android:name="android.intent.category.DEFAULT"/>
         <category android:name="android.intent.category.BROWSABLE"/>
         <data android:scheme="com.bigwave1"/>
-        <data android:scheme="exp+ibw-app"/>
         <data android:scheme="exp+ibw"/>
       </intent-filter>
     </activity>

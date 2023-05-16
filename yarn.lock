@@ -10164,13 +10164,6 @@ react-native-modalize@^2.1.1:
   resolved "https://registry.npmjs.org/react-native-modalize/-/react-native-modalize-2.1.1.tgz"
   integrity sha512-4/7EZWsrUqAAkkAVEnOsSdpAPQaEBewX7TvwFuzgvGDzxKpq3O58I9SnSeU8QtG/r91XYHJNaU5dAuDrcLjUaQ==
 
-react-native-onesignal@4.5.1:
-  version "4.5.1"
-  resolved "https://registry.npmjs.org/react-native-onesignal/-/react-native-onesignal-4.5.1.tgz"
-  integrity sha512-9XtRwW/Hn3dTD7jxQiKIW4+o1bWNgm1jCUPK1SkjyPd7TiH4cnGuL9JGaAMCUvAWUAp9KC8ejShr6v8K0dGVGQ==
-  dependencies:
-    invariant "^2.2.2"
-
 react-native-pdf@^6.6.2:
   version "6.6.2"
   resolved "https://registry.npmjs.org/react-native-pdf/-/react-native-pdf-6.6.2.tgz"
