@@ -61,9 +61,8 @@ export function Candidatos() {
         status: "INSCRIÇÃO APROVADA",
       })
       .then(() => {
-        const title = "INSCIÇÃO IBW 2023";
-        const text =
-          "Parabens, sua inscrição foi aprovada. Confira o status do seu passaporte no aplicativo";
+        const title = "IBW 2023 - INSCRIÇÃO APROVADA";
+        const text = "Favor verificar seu passaporte no aplicativo";
         sendExpoPushNotification({ title, text, token });
       });
   }, []);
@@ -76,8 +75,8 @@ export function Candidatos() {
         status: "INSCRIÇÃO REPROVADA",
       })
       .then(() => {
-        const title = "INSCIÇÃO IBW 2023";
-        const text = "Inscrição reprovada, consulte no administrativo";
+        const title = "IBW 2023 - INSCRIÇÃO REPROVADA";
+        const text = "Requisitos de participação não verificados";
         sendExpoPushNotification({ title, text, token });
       });
   }, []);

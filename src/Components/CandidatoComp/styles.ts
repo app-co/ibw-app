@@ -14,7 +14,7 @@ export const title = styled.Text`
   font-size: ${RFValue(14)}px;
   color: ${theme.colors.text[2]};
 
-  font-family: ${theme.fonts.Bold};
+  font-family: ${theme.fonts.REGULAR};
 `;
 
 export const sub = styled.Text`

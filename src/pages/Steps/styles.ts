@@ -66,7 +66,7 @@ export const boxCategory = styled.TouchableOpacity<Category>`
   padding: 5px 10px;
   border-radius: 5px;
   margin-bottom: 10px;
-  width: 200px;
+  /* width: 200px; */
 `;
 
 export const boxImg = styled.View`
@@ -121,7 +121,7 @@ export const sucessBox = styled.View`
 `;
 
 export const sucessTitle = styled.Text`
-  font-size: ${RFValue(20)}px;
+  font-size: ${RFValue(18)}px;
   text-align: center;
   font-family: ${theme.fonts.Bold};
   color: ${theme.colors.focus[1]};
@@ -130,6 +130,7 @@ export const sucessTitle = styled.Text`
 export const sucessText = styled.Text`
   font-size: ${RFValue(16)}px;
   text-align: center;
+  margin-bottom: 20px;
   font-family: ${theme.fonts.Bold};
   color: #fff;
   margin-top: 10px;

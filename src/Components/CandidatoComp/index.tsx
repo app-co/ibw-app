@@ -12,7 +12,6 @@ interface Props {
 }
 
 export function CandidatoComp({ item, pres, reprovar }: Props) {
-  console.log(item.created_at);
   return (
     <S.Container>
       <S.bx>
@@ -36,8 +35,8 @@ export function CandidatoComp({ item, pres, reprovar }: Props) {
       </S.bx>
 
       <S.bx>
-        <S.title>CPF: </S.title>
-        <S.sub>{item?.cpf}</S.sub>
+        <S.title>CPF / PASSAPORT: </S.title>
+        <S.sub>{item.cpf}</S.sub>
       </S.bx>
 
       <Image src={item.photo} alt="photo" size="md" m="1" />
@@ -45,6 +44,40 @@ export function CandidatoComp({ item, pres, reprovar }: Props) {
       <S.bx style={{ marginTop: 10 }}>
         <S.title style={{ color: theme.colors.focus[1] }}>MODALIDADES:</S.title>
       </S.bx>
+
+      {item.bodyboarding !== "" && (
+        <S.bx
+          style={{
+            backgroundColor: theme.colors.secundary[2],
+            borderRadius: 5,
+            borderWidth: 1,
+            borderColor: theme.colors.secundary[1],
+            padding: 5,
+            flexDirection: "column",
+            marginTop: 3,
+            alignItems: "flex-start",
+          }}
+        >
+          <S.sub>{item.bodyboarding}</S.sub>
+        </S.bx>
+      )}
+
+      {item.cinegrafista !== "" && (
+        <S.bx
+          style={{
+            backgroundColor: theme.colors.secundary[2],
+            borderRadius: 5,
+            borderWidth: 1,
+            borderColor: theme.colors.secundary[1],
+            padding: 5,
+            flexDirection: "column",
+            marginTop: 3,
+            alignItems: "flex-start",
+          }}
+        >
+          <S.sub>{item.cinegrafista}</S.sub>
+        </S.bx>
+      )}
 
       {item.category.map((p) => (
         <S.bx
@@ -63,14 +96,14 @@ export function CandidatoComp({ item, pres, reprovar }: Props) {
           <S.sub>{p.type}</S.sub>
 
           {p.type !== "BODYBOARDING" && p.type !== "CINEGRAFISTA" && (
-            <S.title>EXPERIÊNCIA: {p.exp}</S.title>
+            <S.sub>EXPERIÊNCIA: {p.exp}</S.sub>
           )}
         </S.bx>
       ))}
 
       <S.bx>
         <S.title>Data de Inscriçao: </S.title>
-        <S.sub>{format(Number(item?.created_at), "dd/MM/yy - HH:mm")}</S.sub>
+        <S.sub>{format(Number(item?.created_at), "dd/MM/yy - HH:mm")}h</S.sub>
       </S.bx>
 
       <S.bx>

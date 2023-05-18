@@ -48,18 +48,17 @@ interface PropsExp {
   id?: string;
 }
 
+type IbodyOrCine = "BODYBOARDING" | "CINEGRAFISTA" | "";
+
 const category: ICategory[] = [
   { type: "TOW IN LAJE DO SHOCK - SURFISTA", id: "1", cat: "tow", exp: "" },
+  { type: "TOW IN LAJE DO SHOCK - PILOTO", id: "2", cat: "pilot", exp: "" },
   {
     type: "REMADA PRAIA DE ITACOATIARA - SURFISTA",
-    id: "2",
+    id: "3",
     cat: "remada",
     exp: "",
   },
-  { type: "TOW IN LAJE DO SHOCK - PILOTO", id: "3", cat: "pilot", exp: "" },
-
-  { type: "BODYBOARDING", id: "4", cat: "body", exp: "" },
-  { type: "CINEGRAFISTA", id: "5", cat: "cine", exp: "" },
 ];
 
 const experienc: PropsExp[] = [
@@ -84,13 +83,14 @@ export function Steps() {
 
   const [expTow, setExpTow] = React.useState("");
   const [expRemada, setExpRemada] = React.useState("");
+  const [bodyOrcine, setBodyOrcine] = React.useState<IbodyOrCine>("");
+  const [selectCategory, setSelectCategory] = React.useState<ICategory[]>([]);
 
   const [sex, setSex] = React.useState("");
-  const [selectCategory, setSelectCategory] = React.useState<ICategory[]>([]);
 
   const [regulamento, setRegulamento] = React.useState(false);
   const [showModal, setShowModal] = React.useState(false);
-  const [page, setPage] = React.useState(0);
+  const [page, setPage] = React.useState(1);
 
   const [resonse, setResponse] = React.useState<IUserInc[]>([]);
   const [modalSucces, setModalSucces] = React.useState(false);
@@ -106,6 +106,7 @@ export function Steps() {
       }
 
       setSelectCategory(arrSelect);
+      setBodyOrcine("");
     },
     [selectCategory]
   );
@@ -138,7 +139,7 @@ export function Steps() {
   const event_id = `${getYear(new Date())}${user.id}`;
 
   const filCategoryA = selectCategory.filter((h) => {
-    if (h.type.includes("TOW IN")) {
+    if (h.id === "1") {
       return h;
     }
   });
@@ -204,7 +205,7 @@ export function Steps() {
         return Alert.alert("Erro", "Informe sua experiência");
       }
 
-      if (selectCategory.length === 0) {
+      if (selectCategory.length === 0 && bodyOrcine === "") {
         setLoad(false);
         return Alert.alert("Erro", "Selecione um categoria");
       }
@@ -231,7 +232,7 @@ export function Steps() {
       const cat = selectCategory.map((h) => {
         let exp = "";
 
-        if (h.id === "1" || h.id === "3") {
+        if (h.id === "1") {
           exp = expTow;
         }
 
@@ -256,10 +257,12 @@ export function Steps() {
           name: name.toLocaleUpperCase(),
           email,
           localy,
-          cpf: number(cpf),
+          cpf,
           birthday: date(birthday),
           sexo: sex,
           category: cat,
+          bodyboarding: bodyOrcine === "BODYBOARDING" ? bodyOrcine : "",
+          cinegrafista: bodyOrcine === "CINEGRAFISTA" ? bodyOrcine : "",
           photo: photoUrl,
           status: "Inscrição solicitada",
           created_at: getTime(new Date()),
@@ -291,6 +294,7 @@ export function Steps() {
       }
     },
     [
+      bodyOrcine,
       event_id,
       expRemada,
       expTow,
@@ -305,6 +309,18 @@ export function Steps() {
     ]
   );
 
+  const selectBodyOrCine = React.useCallback(
+    async (item: IbodyOrCine) => {
+      if (bodyOrcine === "") {
+        setBodyOrcine(item);
+        setSelectCategory([]);
+      } else {
+        setBodyOrcine("");
+      }
+    },
+    [bodyOrcine]
+  );
+
   React.useEffect(() => {
     if (regulamento) {
       setShowModal(false);
@@ -313,8 +329,8 @@ export function Steps() {
 
   const closedModalSucces = React.useCallback(async () => {
     // setModalSucces(false);
-    const title = "NOVA INSCRIÇÃO";
-    const text = "Nova inscrição realizado no ibw.";
+    const title = "NOVA SOLICITAÇÃO";
+    const text = "Nova solicitação realizado no ibw.";
 
     fire()
       .collection("users")
@@ -378,7 +394,7 @@ export function Steps() {
 
         <Modal visible={modalSucces}>
           <S.sucessBox>
-            <S.sucessTitle>INSCRIÇÃO REALIZADA COM SUCESSO!</S.sucessTitle>
+            <S.sucessTitle>SOLICITAÇÃO REALIZADA COM SUCESSO!</S.sucessTitle>
             <S.sucessText>
               Agradecemos o envio da solicitação de inscrição. Os requsitos de
               participação serão verificados e em até 3 dias você será informado
@@ -435,20 +451,39 @@ export function Steps() {
               Escolha as categorias que deseja participar (pode ser uma ou mais)
             </S.subText>
 
-            <FlatList
-              style={{ marginTop: 20, marginBottom: 30 }}
-              data={category}
-              renderItem={({ item: h }) => (
-                <S.boxCategory
-                  onPress={() => toggleSecectionCategory(h)}
-                  select={selectCategory.findIndex((i) => i.id === h.id) !== -1}
-                >
-                  <S.subText>{h.type}</S.subText>
-                </S.boxCategory>
-              )}
-            />
+            <S.boxCategory
+              style={{ marginTop: 20 }}
+              onPress={() => selectBodyOrCine("BODYBOARDING")}
+              select={bodyOrcine === "BODYBOARDING"}
+            >
+              <S.subText>BODYBOARDING</S.subText>
+            </S.boxCategory>
 
-            {filCategoryA.length > 0 && (
+            <S.boxCategory
+              onPress={() => selectBodyOrCine("CINEGRAFISTA")}
+              select={bodyOrcine === "CINEGRAFISTA"}
+            >
+              <S.subText>CINEGRAFISTA</S.subText>
+            </S.boxCategory>
+
+            {bodyOrcine === "" && (
+              <FlatList
+                style={{ marginTop: 10, marginBottom: 30 }}
+                data={category}
+                renderItem={({ item: h }) => (
+                  <S.boxCategory
+                    onPress={() => toggleSecectionCategory(h)}
+                    select={
+                      selectCategory.findIndex((i) => i.id === h.id) !== -1
+                    }
+                  >
+                    <S.subText>{h.type}</S.subText>
+                  </S.boxCategory>
+                )}
+              />
+            )}
+
+            {filCategoryA.length > 0 && bodyOrcine === "" && (
               <Box>
                 <S.subText>
                   Experiência prévia no surf de tow in em ondas grande ou lajes
@@ -475,7 +510,7 @@ export function Steps() {
               </Box>
             )}
 
-            {filCategoryB.length > 0 && (
+            {filCategoryB.length > 0 && bodyOrcine === "" && (
               <Box>
                 <S.subText>
                   Experiência prévia em pilotagem de jet ski no tow in

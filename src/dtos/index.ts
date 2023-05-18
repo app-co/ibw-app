@@ -35,8 +35,12 @@ export interface IUserInc {
   expTow: string;
   expRemada: string;
   photo: string;
-  created_at: string;
+  created_at: number;
   status: string;
   user_id: string;
   token: string;
+  localy: string;
+  bodyboarding: string;
+  cinegrafista: string;
+  event_id: string;
 }
