@@ -14,6 +14,11 @@ function pixel(value: number) {
 const lg = Dimensions.get("window").width;
 const at = Dimensions.get("window").height;
 
+export const buttonForgetPass = styled.TouchableOpacity`
+  padding: 5px 10px;
+  margin-bottom: 20px;
+`;
+
 export const Container = styled.View`
   flex: 1;
   align-items: center;
@@ -26,6 +31,19 @@ export const BoxInput = styled.View`
   padding: 0 20px;
 `;
 
+export const boxForgetPass = styled.View`
+  align-self: center;
+  width: 100%;
+  padding: 30px;
+
+  flex: 1;
+
+  align-items: center;
+  justify-content: center;
+
+  background-color: ${colors.primary[3]};
+`;
+
 export const Title = styled.Text`
   color: ${colors.text[2]};
   margin-top: ${RFValue(160)}px;
@@ -34,7 +52,7 @@ export const Title = styled.Text`
 
 export const Up = styled.Text`
   color: ${colors.text[2]};
-  margin-left: ${RFValue(15)}px;
+  /* margin-left: ${RFValue(15)}px; */
   font-family: ${fonts.REGULAR};
 `;
 

@@ -18,7 +18,7 @@ import { Teste } from "../pages/teste";
 
 const Drawer = createDrawerNavigator();
 
-const AppDrawer: React.FC = () => {
+export function AppDrawer() {
   const { user } = useAuth();
 
   return (
@@ -37,11 +37,9 @@ const AppDrawer: React.FC = () => {
       <Drawer.Screen name="QUEM SOMOS" component={Us} />
       <Drawer.Screen name="INSCRIÇÃO NO IBW" component={SteckInscricao} />
       <Drawer.Screen name="PASSAPORTE DE INSCRIÇÃO" component={PassPort} />
-      <Drawer.Screen name="Teste" component={Teste} />
-      {user.adm && <Drawer.Screen name="ADICIONAR EVENTO" component={News} />}
-      <Drawer.Screen name="INSCRIÇÕES" component={Candidatos} />
+      {user?.adm && <Drawer.Screen name="ADICIONAR EVENTO" component={News} />}
+
+      {user?.adm && <Drawer.Screen name="INSCRIÇÕES" component={Candidatos} />}
     </Drawer.Navigator>
   );
-};
-
-export default AppDrawer;
+}

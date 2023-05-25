@@ -9,6 +9,7 @@ import {
 import {
   ActivityIndicator,
   Alert,
+  ScrollView,
   Text,
   Touchable,
   TouchableOpacity,
@@ -147,23 +148,25 @@ export function DrawerContent({ ...props }: Props) {
           <Text style={{ color: theme.colors.text[2], fontSize: RFValue(18) }}>
             Olá
           </Text>
-          <TitleName>{user.nome} </TitleName>
+          <TitleName>{user?.nome} </TitleName>
         </TextContainer>
       </Header>
 
-      <DrawerItemList {...props} />
+      <ScrollView contentContainerStyle={{ paddingBottom: 50 }}>
+        <DrawerItemList {...props} />
 
-      <BoxDeleteProfile onPress={handleDeleteProfile}>
-        <TitleDeleteProfile>EXCLUIR CONTA</TitleDeleteProfile>
-      </BoxDeleteProfile>
+        <BoxDeleteProfile onPress={handleDeleteProfile}>
+          <TitleDeleteProfile>EXCLUIR CONTA</TitleDeleteProfile>
+        </BoxDeleteProfile>
 
-      <LogOf
-        onPress={() => {
-          signOut();
-        }}
-      >
-        <Title>SAIR</Title>
-      </LogOf>
+        <LogOf
+          onPress={() => {
+            signOut();
+          }}
+        >
+          <Title>SAIR</Title>
+        </LogOf>
+      </ScrollView>
     </Container>
   );
 }

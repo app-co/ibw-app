@@ -35,7 +35,7 @@ export function CandidatoComp({ item, pres, reprovar }: Props) {
       </S.bx>
 
       <S.bx>
-        <S.title>CPF / PASSAPORT: </S.title>
+        <S.title>CPF / Passaporte: </S.title>
         <S.sub>{item.cpf}</S.sub>
       </S.bx>
 

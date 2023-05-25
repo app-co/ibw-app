@@ -47,7 +47,7 @@
     "plop": "^3.1.2",
     "react": "18.2.0",
     "react-dom": "18.2.0",
-    "react-native": "0.71.7",
+    "react-native": "0.71.8",
     "react-native-blob-util": "^0.17.3",
     "react-native-dotenv": "^3.4.8",
     "react-native-gesture-handler": "~2.9.0",
