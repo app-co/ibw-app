@@ -329,8 +329,8 @@ export function Steps() {
 
   const closedModalSucces = React.useCallback(async () => {
     // setModalSucces(false);
-    const title = "NOVA SOLICITAÇÃO";
-    const text = "Nova solicitação realizado no ibw.";
+    const title = "NOVA SOLICITAÇÃO DE INSCRIÇÃO";
+    const text = "";
 
     fire()
       .collection("users")
