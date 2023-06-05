@@ -1,3 +1,5 @@
+/* eslint-disable no-underscore-dangle */
+/* eslint-disable func-names */
 import React from "react";
 import { TextInputProps } from "react-native";
 
@@ -11,7 +13,7 @@ export function cep(e: string) {
   return vl;
 }
 
-export function cpf(e: string) {
+export function _cpf(e: string) {
   let value = e;
 
   value = value.replace(/\D/g, "");
@@ -61,7 +63,7 @@ export function number(e: string) {
   return vl;
 }
 
-export function date(e: string) {
+export function _date(e: string) {
   let value = e;
 
   value = value.replace(/\D/g, "");

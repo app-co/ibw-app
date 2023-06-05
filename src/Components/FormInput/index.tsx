@@ -8,7 +8,7 @@ import { useField } from "@unform/core";
 
 import * as S from "./styles";
 import theme from "../../global/styles/theme";
-import { cpf, date, texto } from "../../utils/mask";
+import { _cpf, _date, cpf, date, texto } from "../../utils/mask";
 
 interface Mask {
   type: "cpf" | "date" | "text" | "number";
@@ -16,7 +16,7 @@ interface Mask {
 
 interface Props extends TextInputProps {
   name: string;
-  icon: string;
+  icon?: string;
   nome: string;
   mask?: Mask;
 }
@@ -72,30 +72,26 @@ export function Input({
   React.useEffect(() => {
     switch (msk.type) {
       case "cpf":
-        try {
-          const vl = cpf(text);
+        {
+          const vl = _cpf(text);
 
           setMascara(vl);
-        } catch (error) {
-          console.log(error);
         }
         break;
 
       case "date":
-        try {
-          const vl = date(text);
+        {
+          const vl = _date(text);
 
           setMascara(vl);
-        } catch (error) {}
+        }
         break;
 
       case "text":
-        try {
+        {
           const vl = texto(text);
 
           setMascara(vl);
-        } catch (error) {
-          console.log(error);
         }
         break;
 

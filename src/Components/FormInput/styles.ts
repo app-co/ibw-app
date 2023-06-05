@@ -1,6 +1,7 @@
 import { Feather } from "@expo/vector-icons";
 import { RFValue } from "react-native-responsive-fontsize";
 import styled, { css } from "styled-components/native";
+import { TextInput } from "react-native";
 import theme from "../../global/styles/theme";
 
 const { colors, fonts } = theme;
@@ -47,7 +48,7 @@ export const Box = styled.View<Props>`
       `};
 `;
 
-export const Container = styled.TextInput`
+export const Container = styled(TextInput)`
   flex: 1;
   font-size: ${RFValue(16)}px;
   color: ${colors.text[2]};

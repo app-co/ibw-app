@@ -1,7 +1,7 @@
 /* eslint-disable camelcase */
 import { FormHandles } from "@unform/core";
 import { Form } from "@unform/mobile";
-import { Box, Center, Image } from "native-base";
+import { Box, Center, HStack, Image } from "native-base";
 import React, { useCallback, useReducer, useRef, useState } from "react";
 import {
   Alert,
@@ -23,7 +23,7 @@ import { IUserInc, IUsersDto } from "../../dtos";
 import { useAuth } from "../../hooks/AuthContext";
 import * as S from "./styles";
 import getValidationErrors from "../../utils/getValidationErrors";
-import { date, number } from "../../utils/mask";
+import { _cpf, _date, cpf, date, number } from "../../utils/mask";
 import { Header } from "../../Components/Header";
 import { Contrato } from "../../Components/Contrato";
 import theme from "../../global/styles/theme";
@@ -75,6 +75,8 @@ interface Credentials {
   localy: string;
 }
 
+type TTypeDoc = "cpf" | "passport";
+
 export function Steps() {
   const { user } = useAuth();
   const ref = useRef<FormHandles>(null);
@@ -85,6 +87,8 @@ export function Steps() {
   const [expRemada, setExpRemada] = React.useState("");
   const [bodyOrcine, setBodyOrcine] = React.useState<IbodyOrCine>("");
   const [selectCategory, setSelectCategory] = React.useState<ICategory[]>([]);
+  const [typeDoc, setTypeDoc] = React.useState<TTypeDoc>("cpf");
+  const [cpf, setCpf] = React.useState("");
 
   const [sex, setSex] = React.useState("");
 
@@ -152,7 +156,7 @@ export function Steps() {
 
   const handleSubmit = React.useCallback(
     async (data: Credentials) => {
-      const { name, email, cpf, birthday, localy } = data;
+      const { name, email, birthday, localy } = data;
       setLoad(true);
 
       if (!regulamento) {
@@ -184,13 +188,7 @@ export function Steps() {
         return Alert.alert("Erro", "Digite seu nome completo");
       }
 
-      if (
-        name === "" ||
-        cpf === "" ||
-        birthday === "" ||
-        localy === "" ||
-        email === ""
-      ) {
+      if (name === "" || birthday === "" || localy === "" || email === "") {
         setLoad(false);
         return Alert.alert("Erro", "Preencha todo o formulário");
       }
@@ -220,9 +218,17 @@ export function Steps() {
         return Alert.alert("Erro", "Faça o upload de uma imagem");
       }
 
-      // if (cpf.length < 14) {
-      //   return Alert.alert("Erro", "Cpf inválido");
-      // }
+      if (typeDoc === "cpf") {
+        const validateCpf = _validarCPF(cpf);
+
+        if (!validateCpf) {
+          setLoad(false);
+          return Alert.alert("Erro", "Cpf inválido");
+        }
+      } else if (cpf === "") {
+        setLoad(false);
+        return Alert.alert("Erro", "Passaporte inválido");
+      }
 
       if (birthday.length < 8) {
         setLoad(false);
@@ -258,7 +264,7 @@ export function Steps() {
           email,
           localy,
           cpf,
-          birthday: date(birthday),
+          birthday: _date(birthday),
           sexo: sex,
           category: cat,
           bodyboarding: bodyOrcine === "BODYBOARDING" ? bodyOrcine : "",
@@ -279,8 +285,8 @@ export function Steps() {
             setModalSucces(true);
           });
       } catch (err) {
-        console.log(err);
         setLoad(false);
+        console.log(err);
         if (err instanceof Yup.ValidationError) {
           const errors = getValidationErrors(err);
           ref.current?.setErrors(errors);
@@ -294,18 +300,21 @@ export function Steps() {
       }
     },
     [
-      bodyOrcine,
-      event_id,
-      expRemada,
-      expTow,
-      filCategoryA,
-      filCategoryB,
-      image,
       regulamento,
       resonse,
+      filCategoryA.length,
+      expTow,
+      filCategoryB.length,
+      expRemada,
       selectCategory,
+      bodyOrcine,
       sex,
-      user,
+      image,
+      typeDoc,
+      cpf,
+      user?.id,
+      user?.token,
+      event_id,
     ]
   );
 
@@ -417,7 +426,51 @@ export function Steps() {
           <S.form onSubmit={handleSubmit} ref={ref}>
             <Input nome="Nome completo" name="name" />
             <Input keyboardType="email-address" nome="E-mail" name="email" />
-            <Input nome="CPF ou Passaporte" name="cpf" maxLength={14} />
+
+            <HStack space={8} mt="3">
+              <Selection
+                variant="secundary"
+                pres={() => {
+                  setTypeDoc("cpf");
+                  setCpf("");
+                }}
+                select={typeDoc === "cpf"}
+                text="CPF"
+              />
+              <Selection
+                variant="secundary"
+                pres={() => {
+                  setCpf("");
+                  setTypeDoc("passport");
+                }}
+                select={typeDoc === "passport"}
+                text="Passaporte"
+              />
+            </HStack>
+
+            {typeDoc === "cpf" && (
+              <Input
+                onChangeText={(h) => {
+                  const vl = _cpf(h);
+                  setCpf(vl);
+                }}
+                value={cpf}
+                nome="CPF"
+                name="cpf"
+                maxLength={14}
+                keyboardType="numeric"
+              />
+            )}
+
+            {typeDoc === "passport" && (
+              <Input
+                onChangeText={setCpf}
+                nome="Passaporte"
+                name="cpf"
+                maxLength={14}
+              />
+            )}
+
             <Input
               keyboardType="numeric"
               mask={{ type: "date" }}
