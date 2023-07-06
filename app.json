@@ -2,7 +2,7 @@
   "expo": {
     "name": "IBW",
     "slug": "IBW",
-    "version": "2.1.9",
+    "version": "2.2.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "light",
@@ -18,7 +18,7 @@
       "supportsTablet": true,
       "googleServicesFile": "./GoogleService-Info.plist",
       "bundleIdentifier": "org.name.bigwave",
-      "buildNumber": "23"
+      "buildNumber": "24"
     },
     "android": {
       "adaptiveIcon": {
@@ -27,22 +27,28 @@
       },
       "googleServicesFile": "./google-services.json",
       "package": "com.bigwave1",
-      "versionCode": 23
+      "versionCode": 24
     },
     "web": {
       "favicon": "./assets/favicon.png"
     },
     "plugins": [
       "@react-native-firebase/app",
-      ["expo-notifications", {
-        "color": "#c8c8c8"
-      }]
-  
+      [
+        "expo-notifications",
+        {
+          "color": "#c8c8c8"
+        }
+      ]
     ],
     "extra": {
       "eas": {
         "projectId": "24ce9713-10d0-4ee6-8a7e-4ebd8f4ed954"
       }
+    },
+    "runtimeVersion": "2.0.0",
+    "updates": {
+      "url": "https://u.expo.dev/24ce9713-10d0-4ee6-8a7e-4ebd8f4ed954"
     }
   }
 }

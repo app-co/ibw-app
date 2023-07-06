@@ -1,9 +1,11 @@
-import React from "react";
+import React, { ReactNode } from "react";
 
 import { AuthProvider } from "./AuthContext";
 
-const AppProvider: React.FC = ({ children }) => (
-  <AuthProvider>{children}</AuthProvider>
-);
+type T = { children: ReactNode };
+
+function AppProvider({ children }: T) {
+  return <AuthProvider>{children}</AuthProvider>;
+}
 
 export default AppProvider;

@@ -3,6 +3,7 @@
 /* eslint-disable camelcase */
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import React, {
+  ReactNode,
   createContext,
   useCallback,
   useContext,
@@ -31,11 +32,14 @@ interface AuthContexData {
   updateUser(user: IUsersDto): Promise<void>;
 }
 
+type T = {children: ReactNode}
+
 const User_Collection = "@ibw:user";
 
 export const AuthContext = createContext<AuthContexData>({} as AuthContexData);
 
-export function AuthProvider({ children }: any) {
+
+export function AuthProvider({ children }: T) {
   const [loading, setLoading] = useState(true);
   const [user, setUser] = useState<IUsersDto | null>(null);
 
