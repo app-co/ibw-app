@@ -4,6 +4,7 @@ import { Form } from "@unform/mobile";
 import { Box, Center, HStack, Image } from "native-base";
 import React, { useCallback, useReducer, useRef, useState } from "react";
 import {
+  ActivityIndicator,
   Alert,
   FlatList,
   Modal,
@@ -51,20 +52,13 @@ interface PropsExp {
 type IbodyOrCine = "BODYBOARDING" | "CINEGRAFISTA" | "";
 
 const category: ICategory[] = [
-  { type: "TOW IN LAJE DO SHOCK - SURFISTA", id: "1", cat: "tow", exp: "" },
-  { type: "TOW IN LAJE DO SHOCK - PILOTO", id: "2", cat: "pilot", exp: "" },
+  { type: "TOW IN - SURFISTA", id: "1", cat: "tow", exp: "" },
   {
-    type: "REMADA PRAIA DE ITACOATIARA - SURFISTA",
-    id: "3",
+    type: "TOW IN - PILOTO",
+    id: "2",
     cat: "remada",
     exp: "",
   },
-];
-
-const experienc: PropsExp[] = [
-  { cat: "tow", exp: "" },
-  { cat: "remada", exp: "" },
-  { cat: "body", exp: "" },
 ];
 
 interface Credentials {
@@ -93,6 +87,7 @@ export function Steps() {
   const [sex, setSex] = React.useState("");
 
   const [regulamento, setRegulamento] = React.useState(false);
+  const [modalAlert, setModalAlert] = React.useState(false);
   const [showModal, setShowModal] = React.useState(false);
   const [page, setPage] = React.useState(1);
 
@@ -158,14 +153,6 @@ export function Steps() {
     async (data: Credentials) => {
       const { name, email, birthday, localy } = data;
       setLoad(true);
-
-      if (!regulamento) {
-        setLoad(false);
-        return Alert.alert(
-          "Atenção",
-          "Leia o regulamento para encerrar sua inscrição"
-        );
-      }
 
       const findCpf = resonse.find((h) => {
         const { cpf } = data;
@@ -286,7 +273,6 @@ export function Steps() {
           });
       } catch (err) {
         setLoad(false);
-        console.log(err);
         if (err instanceof Yup.ValidationError) {
           const errors = getValidationErrors(err);
           ref.current?.setErrors(errors);
@@ -300,7 +286,6 @@ export function Steps() {
       }
     },
     [
-      regulamento,
       resonse,
       filCategoryA.length,
       expTow,
@@ -415,6 +400,61 @@ export function Steps() {
           </S.sucessBox>
         </Modal>
 
+        <Modal animationType="slide" visible={modalAlert}>
+          <Center bg="gray.600" flex="1">
+            <S.title>
+              Ao clicar em continuar você concorda com o regulamento
+            </S.title>
+
+            <HStack w="full" space={8} justifyContent="center">
+              <TouchableOpacity
+                style={{
+                  backgroundColor: theme.colors.primary[3],
+                  padding: 10,
+                  borderRadius: 10,
+                }}
+                onPress={() => setModalAlert(false)}
+              >
+                <S.text
+                  style={{
+                    color: "#fff",
+                    fontFamily: theme.fonts.REGULAR,
+                    textAlign: "center",
+                    fontSize: 16,
+                  }}
+                >
+                  CANCELAR
+                </S.text>
+              </TouchableOpacity>
+
+              <TouchableOpacity
+                disabled={load}
+                style={{
+                  backgroundColor: theme.colors.primary[2],
+                  padding: 10,
+                  borderRadius: 10,
+                }}
+                onPress={() => ref.current?.submitForm()}
+              >
+                {load ? (
+                  <ActivityIndicator />
+                ) : (
+                  <S.text
+                    style={{
+                      color: "#fff",
+                      fontFamily: theme.fonts.REGULAR,
+                      textAlign: "center",
+                      fontSize: 16,
+                    }}
+                  >
+                    CONTINUAR
+                  </S.text>
+                )}
+              </TouchableOpacity>
+            </HStack>
+          </Center>
+        </Modal>
+
         <S.title style={{ alignSelf: "center" }}>
           Formulário de solicitação de inscrição
         </S.title>
@@ -503,14 +543,6 @@ export function Steps() {
             <S.subText>
               Escolha as categorias que deseja participar (pode ser uma ou mais)
             </S.subText>
-
-            <S.boxCategory
-              style={{ marginTop: 20 }}
-              onPress={() => selectBodyOrCine("BODYBOARDING")}
-              select={bodyOrcine === "BODYBOARDING"}
-            >
-              <S.subText>BODYBOARDING</S.subText>
-            </S.boxCategory>
 
             <S.boxCategory
               onPress={() => selectBodyOrCine("CINEGRAFISTA")}
@@ -613,7 +645,7 @@ export function Steps() {
               </TouchableOpacity>
             </Center>
 
-            <Center px="10">
+            <Center mb="4" px="10">
               <TouchableOpacity onPress={() => setShowModal(true)}>
                 <S.text
                   style={{
@@ -628,18 +660,10 @@ export function Steps() {
               </TouchableOpacity>
             </Center>
 
-            <S.boxSelect>
-              <Selection
-                variant="secundary"
-                select={regulamento}
-                text="LI E CONCORDO"
-              />
-            </S.boxSelect>
-
             <Center>
               <Buttom
                 load={load}
-                pres={() => ref.current?.submitForm()}
+                pres={() => setModalAlert(true)}
                 nome="FINALIZAR"
               />
             </Center>
