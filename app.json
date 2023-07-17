@@ -2,7 +2,7 @@
   "expo": {
     "name": "IBW",
     "slug": "IBW",
-    "version": "2.2.4",
+    "version": "2.2.6",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "light",
@@ -18,7 +18,7 @@
       "supportsTablet": true,
       "googleServicesFile": "./GoogleService-Info.plist",
       "bundleIdentifier": "org.name.bigwave",
-      "buildNumber": "26"
+      "buildNumber": "28"
     },
     "android": {
       "adaptiveIcon": {
@@ -27,7 +27,7 @@
       },
       "googleServicesFile": "./google-services.json",
       "package": "com.bigwave1",
-      "versionCode": 26
+      "versionCode": 28
     },
     "web": {
       "favicon": "./assets/favicon.png"
