@@ -153,6 +153,7 @@ export function Steps() {
     async (data: Credentials) => {
       const { name, email, birthday, localy } = data;
       setLoad(true);
+      setModalAlert(false)
 
       const findCpf = resonse.find((h) => {
         const { cpf } = data;
@@ -400,7 +401,7 @@ export function Steps() {
           </S.sucessBox>
         </Modal>
 
-        <Modal animationType="slide" visible={modalAlert}>
+        <Modal  visible={modalAlert}>
           <Center bg="gray.600" flex="1">
             <S.title>
               Ao clicar em continuar você concorda com o regulamento
@@ -434,7 +435,10 @@ export function Steps() {
                   padding: 10,
                   borderRadius: 10,
                 }}
-                onPress={() => ref.current?.submitForm()}
+                onPress={() => {
+                  ref.current?.submitForm()
+                  setModalAlert(false)
+                }}
               >
                 {load ? (
                   <ActivityIndicator />
