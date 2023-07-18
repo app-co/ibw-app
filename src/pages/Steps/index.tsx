@@ -49,7 +49,7 @@ interface PropsExp {
   id?: string;
 }
 
-type IbodyOrCine = "BODYBOARDING" | "CINEGRAFISTA" | "";
+type IbodyOrCine = "CINEGRAFISTA" | "";
 
 const category: ICategory[] = [
   { type: "TOW IN - SURFISTA", id: "1", cat: "tow", exp: "" },
@@ -153,7 +153,7 @@ export function Steps() {
     async (data: Credentials) => {
       const { name, email, birthday, localy } = data;
       setLoad(true);
-      setModalAlert(false)
+      setModalAlert(false);
 
       const findCpf = resonse.find((h) => {
         const { cpf } = data;
@@ -255,7 +255,6 @@ export function Steps() {
           birthday: _date(birthday),
           sexo: sex,
           category: cat,
-          bodyboarding: bodyOrcine === "BODYBOARDING" ? bodyOrcine : "",
           cinegrafista: bodyOrcine === "CINEGRAFISTA" ? bodyOrcine : "",
           photo: photoUrl,
           status: "Inscrição solicitada",
@@ -401,7 +400,7 @@ export function Steps() {
           </S.sucessBox>
         </Modal>
 
-        <Modal  visible={modalAlert}>
+        <Modal visible={modalAlert}>
           <Center bg="gray.600" flex="1">
             <S.title>
               Ao clicar em continuar você concorda com o regulamento
@@ -436,8 +435,8 @@ export function Steps() {
                   borderRadius: 10,
                 }}
                 onPress={() => {
-                  ref.current?.submitForm()
-                  setModalAlert(false)
+                  ref.current?.submitForm();
+                  setModalAlert(false);
                 }}
               >
                 {load ? (

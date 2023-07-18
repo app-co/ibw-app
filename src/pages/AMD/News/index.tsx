@@ -52,11 +52,8 @@ export function News() {
     const result = await ImagePicker.launchImageLibraryAsync({
       mediaTypes: ImagePicker.MediaTypeOptions.All,
       allowsEditing: true,
-      aspect: [4, 3],
       quality: 1,
     });
-
-    console.log(result);
 
     if (!result.cancelled) {
       setImage(result.uri);
@@ -77,8 +74,6 @@ export function News() {
   );
 
   const handleCadastrar = useCallback(() => {
-    setLoading(true);
-
     if (descricao === "" && title === "") {
       return Alert.alert(
         "CADASTRO",
@@ -90,6 +85,7 @@ export function News() {
       setLoading(false);
       return Alert.alert("CADASTRO", "Você precisa selecionar uma image");
     }
+    setLoading(true);
     Firestore()
       .collection("news")
       .add({

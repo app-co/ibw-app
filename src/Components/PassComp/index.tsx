@@ -105,6 +105,11 @@ export function PassComp({ data }: Props) {
             <S.subTitle>{h.type}</S.subTitle>
           </S.bxCategoria>
         ))}
+        {!!data.cinegrafista && (
+          <S.bxCategoria>
+            <S.subTitle>{data.cinegrafista}</S.subTitle>
+          </S.bxCategoria>
+        )}
       </Box>
     </Box>
   );

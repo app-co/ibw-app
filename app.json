@@ -34,6 +34,14 @@
     },
     "plugins": [
       "@react-native-firebase/app",
+
+      [
+        "expo-updates",
+        {
+          "username": "app-c"
+        }
+      ],
+
       [
         "expo-notifications",
         {

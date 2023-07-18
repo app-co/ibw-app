@@ -21,6 +21,7 @@ import cartas2 from "../../assets/cartas2.jpeg";
 import evento1 from "../../assets/evento1.jpeg";
 import evento2 from "../../assets/evento2.jpeg";
 import evento3 from "../../assets/evento3.jpeg";
+import event from "../../assets/news.jpeg";
 
 export function Eventos() {
   const [news, setNews] = useState<INewsDto[]>([]);
@@ -81,6 +82,12 @@ export function Eventos() {
             ) : (
               <View style={{ width: "100%" }}>
                 <VStack>
+                  <Image
+                    source={event}
+                    alt="cartas0"
+                    size="600"
+                    resizeMode="contain"
+                  />
                   <Image
                     source={cartas1}
                     alt="cartas1"
