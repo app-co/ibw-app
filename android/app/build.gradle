@@ -127,8 +127,8 @@ android {
         applicationId 'com.bigwave1'
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 29
-        versionName "2.2.8"
+        versionCode 30
+        versionName "2.2.9"
     }
 
     splits {
