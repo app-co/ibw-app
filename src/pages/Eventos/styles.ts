@@ -1,6 +1,7 @@
 import { RFValue } from "react-native-responsive-fontsize";
 import styled from "styled-components/native";
 import theme from "../../global/styles/theme";
+import { sizeW } from "../../utils";
 
 const { colors, fonts } = theme;
 
@@ -20,4 +21,8 @@ export const Title = styled.Text`
   margin-bottom: ${RFValue(36)}px;
   color: ${colors.text[2]};
   font-family: ${fonts.REGULAR};
+`;
+
+export const BoxImags = styled.View`
+  width: ${sizeW(1)}px;
 `;

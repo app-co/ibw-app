@@ -1,7 +1,7 @@
 import { Form } from "@unform/mobile";
+import { Dimensions } from "react-native";
 import { RFValue } from "react-native-responsive-fontsize";
 import styled from "styled-components/native";
-import { Dimensions } from "react-native";
 import theme from "../../global/styles/theme";
 
 interface Category {
@@ -27,13 +27,14 @@ export const title = styled.Text`
   font-family: ${theme.fonts.Bold};
   margin-bottom: 30px;
   font-size: ${RFValue(18)}px;
-  width: 70%;
+  width: 90%;
   text-align: center;
 `;
 
 export const text = styled.Text`
   font-size: ${h * 0.018}px;
   text-align: center;
+  color: ${theme.colors.text[2]};
 `;
 
 export const form = styled(Form)`

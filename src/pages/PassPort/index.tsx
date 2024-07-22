@@ -1,11 +1,11 @@
-import React from "react";
 import fire from "@react-native-firebase/firestore";
-import { FlatList } from "react-native";
-import { PassComp } from "../../Components/PassComp";
-import * as S from "./styles";
+import { LinearGradient } from "expo-linear-gradient";
+import { Box, Center, HStack, Image, VStack } from "native-base";
+import React from "react";
 import { IUserInc } from "../../dtos";
+import theme from "../../global/styles/theme";
 import { useAuth } from "../../hooks/AuthContext";
-import { Header } from "../../Components/Header";
+import * as S from "./styles";
 
 export function PassPort() {
   const { user } = useAuth();
@@ -40,19 +40,81 @@ export function PassPort() {
 
   return (
     <S.Container>
-      <Header icon="menu" />
-      <FlatList
-        contentContainerStyle={{
-          paddingBottom: 200,
-        }}
-        data={pass}
-        keyExtractor={(h) => h.id}
-        renderItem={({ item: h }) => (
+      <LinearGradient
+        start={{ x: 0, y: 1 }}
+        end={{ x: 1, y: 0 }}
+        colors={["#106975", "#3F1F82"]}
+      >
+        <HStack>
+          <VStack p={4} h="600px" flex={1}>
+            <HStack mt={8} alignItems="center" space={3}>
+              <S.title>PASSPORT</S.title>
+              <S.title style={{ fontFamily: theme.fonts.Bold, fontSize: 24 }}>
+                ITA
+              </S.title>
+            </HStack>
+
+            <HStack alignItems="center" space={8}>
+              <Image mt={4} w={130} h={135} bg="gray.100" />
+              <Center>
+                <S.text>código</S.text>
+                <S.codigo
+                  style={{
+                    color: theme.colors.secundary[1],
+                    fontWeight: "700",
+                  }}
+                >
+                  A0054
+                </S.codigo>
+              </Center>
+            </HStack>
+
+            <Box style={{ gap: 20 }}>
+              <S.text
+                style={{
+                  marginTop: 10,
+                  fontSize: 18,
+                  fontFamily: theme.fonts.Bold,
+                }}
+              >
+                William Barbosa
+              </S.text>
+
+              <HStack mt={16}>
+                <S.text style={{ color: theme.colors.secundary[1] }}>
+                  Born -
+                </S.text>
+                <S.text>10/02/1989</S.text>
+              </HStack>
+
+              <HStack>
+                <S.text style={{ color: theme.colors.secundary[1] }}>
+                  Passport/Cpf -
+                </S.text>
+                <S.text>10/02/1989</S.text>
+              </HStack>
+
+              <HStack>
+                <S.text style={{ color: theme.colors.secundary[1] }}>
+                  Sexo -
+                </S.text>
+                <S.text>10/02/1989</S.text>
+              </HStack>
+
+              <HStack>
+                <S.text style={{ color: theme.colors.secundary[1] }}>
+                  Country -
+                </S.text>
+                <S.text>10/02/1989</S.text>
+              </HStack>
+            </Box>
+          </VStack>
+
           <S.box>
-            <PassComp data={h} />
+            <S.ita>IINTERNATIONAL TAW IN ASSOCIATION</S.ita>
           </S.box>
-        )}
-      />
+        </HStack>
+      </LinearGradient>
     </S.Container>
   );
 }

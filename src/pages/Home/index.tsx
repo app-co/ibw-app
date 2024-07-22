@@ -1,13 +1,20 @@
 /* eslint-disable array-callback-return */
 import React, { useCallback, useEffect, useRef, useState } from "react";
-import { ActivityIndicator, Alert, TouchableOpacity } from "react-native";
-import YoutubePlayer from "react-native-youtube-iframe";
+import { ActivityIndicator, Alert } from "react-native";
 import { Modalize } from "react-native-modalize";
+import YoutubePlayer from "react-native-youtube-iframe";
 
 import Firebase from "@react-native-firebase/firestore";
-import { useFocusEffect, useNavigation } from "@react-navigation/native";
-import { Box, Center, Text, Button as ButomBase } from "native-base";
-import * as Updates from "expo-updates";
+import { useFocusEffect } from "@react-navigation/native";
+import { Box, Center, Text } from "native-base";
+import { ButtonFlutuante } from "../../Components/ButtonFlutuante";
+import { Engajamento } from "../../Components/Engajamento";
+import { ILive, IUsersDto } from "../../dtos";
+import theme from "../../global/styles/theme";
+import { useAuth } from "../../hooks/AuthContext";
+import { registerToken } from "../../notifications/sendNotification";
+import { sizeH, sizeW } from "../../utils";
+import { Live } from "../AMD/Live";
 import {
   BoxPlayer,
   BoxText,
@@ -15,16 +22,6 @@ import {
   Title,
   TitleDesciption,
 } from "./styles";
-import { useAuth } from "../../hooks/AuthContext";
-import { Engajamento } from "../../Components/Engajamento";
-import { sizeH, sizeW } from "../../utils";
-import { ButtonFlutuante } from "../../Components/ButtonFlutuante";
-import { Live } from "../AMD/Live";
-import { Header } from "../../Components/Header";
-import { ILive, IUsersDto } from "../../dtos";
-import fundo from "../../assets/fundo1-onda.png";
-import theme from "../../global/styles/theme";
-import { registerToken } from "../../notifications/sendNotification";
 
 export function Home() {
   const modalRef = useRef<Modalize>(null);
@@ -134,8 +131,6 @@ export function Home() {
         <Live closeModal={CloseModal} />
       </Modalize>
 
-      <Header icon="menu" />
-
       {load ? (
         <Center mt="40%">
           {activi && <ActivityIndicator />}
@@ -151,7 +146,7 @@ export function Home() {
               height={sizeH(0.6)}
               width={sizeW(0.7)}
 
-              // onChangeState={onStateChange}
+            // onChangeState={onStateChange}
             />
           </Box>
         </Center>

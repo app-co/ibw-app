@@ -1,19 +1,16 @@
-import React from "react";
 import fire from "@react-native-firebase/firestore";
 import { Form } from "@unform/mobile";
-import { FlatList } from "react-native";
-import { Box, Center } from "native-base";
 import * as Link from "expo-linking";
+import { Box, Center } from "native-base";
+import React from "react";
+import { FlatList } from "react-native";
 import { CandidatoComp } from "../../Components/CandidatoComp";
-import { IUserInc } from "../../dtos";
-import * as S from "./styles";
 import { Input } from "../../Components/FormInput";
-import { Buttom } from "../../Components/Buttom";
-import { Header } from "../../Components/Header";
+import { IUserInc } from "../../dtos";
 import {
-  sendExpoPushNotification,
-  sendPushNotification,
+  sendExpoPushNotification
 } from "../../notifications/sendNotification";
+import * as S from "./styles";
 
 export function Candidatos() {
   const [response, setResponse] = React.useState<IUserInc[]>([]);
@@ -83,8 +80,6 @@ export function Candidatos() {
 
   return (
     <S.Container>
-      <Header icon="menu" />
-
       <Center>
         <S.title>Lista de Inscritos</S.title>
         <S.touch onPress={handleLinking}>

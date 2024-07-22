@@ -5,18 +5,16 @@ import { DrawerActions, useNavigation } from "@react-navigation/native";
 import React from "react";
 import { TouchableOpacity } from "react-native";
 import { RFValue } from "react-native-responsive-fontsize";
-import { Box, Center } from "native-base";
-import theme from "../../global/styles/theme";
-import { Container, Head, Logo, Title } from "./styles";
 import logo from "../../assets/logo-signIn.png";
+import theme from "../../global/styles/theme";
 import { useAuth } from "../../hooks/AuthContext";
+import { Container, Head, Logo } from "./styles";
 
 type Props = {
-  pres?: () => void;
-  icon: string;
+  icon?: string;
 };
 
-export function Header({ pres, icon }: Props) {
+export function Header(prps) {
   const auth = useAuth();
   const { dispatch, goBack } = useNavigation();
 
@@ -32,7 +30,7 @@ export function Header({ pres, icon }: Props) {
         >
           {auth.user ? (
             <Feather
-              name={icon}
+              name="menu"
               size={RFValue(40)}
               color={theme.colors.text[2]}
             />

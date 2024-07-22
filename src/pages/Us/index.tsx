@@ -1,12 +1,10 @@
-import React from "react";
 import LottieView from "lottie-react-native";
-import { View } from "react-native";
 import { Image } from "native-base";
-import { Header } from "../../Components/Header";
+import React from "react";
 import { Box, Container, Loti, Title } from "./styles";
 
-import loti from "../../assets/loti.json";
 import fundo from "../../assets/fundo-quem-somos.jpeg";
+import loti from "../../assets/loti.json";
 
 export function Us() {
   return (
@@ -21,9 +19,8 @@ export function Us() {
         source={fundo}
         alt="fundo"
       />
-      <Header icon="menu" />
 
-      <Box style={{ marginTop: 130 }}>
+      <Box style={{ marginTop: 30 }}>
         <Title>
           Surf de Ondas Grandes e Tow In em Itacoatirara, Ilha Mãe e Laje do
           Shock. Niterói - Brasil, desde 2018.

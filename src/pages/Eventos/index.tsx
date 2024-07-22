@@ -1,27 +1,21 @@
+import Firestore from "@react-native-firebase/firestore";
+import { useFocusEffect } from "@react-navigation/native";
+import { Box, Center, Image, Text } from "native-base";
 import React, { useCallback, useEffect, useState } from "react";
 import {
   ActivityIndicator,
   FlatList,
-  Platform,
   SafeAreaView,
   ScrollView,
   View,
 } from "react-native";
-import Firestore from "@react-native-firebase/firestore";
-import { useFocusEffect } from "@react-navigation/native";
-import { Box, Center, Image, Text, VStack } from "native-base";
-import { CardsEventos } from "../../Components/CardsEventos";
+import YoutubePlayer from "react-native-youtube-iframe";
 import { INewsDto } from "../../dtos";
-import { Container, Title } from "./styles";
 import theme from "../../global/styles/theme";
-import { Header } from "../../Components/Header";
-import fundo from "../../assets/fundo-onda.jpg";
-import cartas1 from "../../assets/cartas1.jpeg";
-import cartas2 from "../../assets/cartas2.jpeg";
-import evento1 from "../../assets/evento1.jpeg";
-import evento2 from "../../assets/evento2.jpeg";
-import evento3 from "../../assets/evento3.jpeg";
-import event from "../../assets/news.jpeg";
+import { sizeW } from "../../utils";
+import { BoxImags, Container, Title } from "./styles";
+
+const playList = [1, 2, 3, 4, 5];
 
 export function Eventos() {
   const [news, setNews] = useState<INewsDto[]>([]);
@@ -57,16 +51,17 @@ export function Eventos() {
   return (
     <Container>
       <SafeAreaView style={{ flex: 1, backgroundColor: "#868686 " }}>
-        <Header icon="menu" />
-
-        <ScrollView>
+        <ScrollView contentContainerStyle={{ paddingTop: 20 }}>
           <Center>
             <Text
               fontSize="lg"
               fontFamily={theme.fonts.Bold}
               color={theme.colors.text[2]}
             >
-              IBW - GALERIA
+              EDIÇOÕES ANTERIOERES
+            </Text>
+            <Text fontFamily={theme.fonts.REGULAR} color={theme.colors.text[2]}>
+              (Previeus editions)
             </Text>
             {load ? (
               <View
@@ -80,67 +75,81 @@ export function Eventos() {
                 <ActivityIndicator size="large" color={theme.colors.text[2]} />
               </View>
             ) : (
-              <View style={{ width: "100%" }}>
-                <VStack>
-                  <Image
-                    source={event}
-                    alt="cartas0"
-                    size="600"
-                    resizeMode="contain"
-                  />
-                  <Image
-                    source={cartas1}
-                    alt="cartas1"
-                    size="600"
-                    resizeMode="contain"
-                  />
-                  <Image
-                    source={evento2}
-                    alt="cartas1"
-                    size="600"
-                    resizeMode="contain"
-                    mt={-20}
-                  />
-                  <Image
-                    source={evento1}
-                    alt="cartas1"
-                    size="600"
-                    resizeMode="contain"
-                    mt={-20}
-                  />
-                  <Image
-                    source={evento3}
-                    alt="cartas1"
-                    size="600"
-                    resizeMode="contain"
-                    mt={-20}
-                  />
-                </VStack>
-
+              <Box mt={4} p={3}>
                 <FlatList
-                  nestedScrollEnabled
-                  style={{
-                    marginTop: 0,
-                  }}
-                  contentContainerStyle={{
-                    paddingBottom: 300,
-                    marginTop: 100,
-                  }}
-                  data={news}
-                  keyExtractor={(h) => h.id}
+                  contentContainerStyle={{ gap: 15, paddingHorizontal: 10 }}
+                  horizontal
+                  data={playList}
+                  keyExtractor={(h) => String(h)}
                   renderItem={({ item: h }) => (
-                    <View>
-                      <CardsEventos
-                        title={h.title}
-                        description={h.descricao}
-                        type={h.type}
-                        image={h.image}
-                        url={h.video}
-                      />
-                    </View>
+                    <Box>
+                      <YoutubePlayer height={190} width={sizeW(0.9)} />
+                    </Box>
                   )}
                 />
-              </View>
+
+                <Text
+                  fontSize="lg"
+                  fontFamily={theme.fonts.Bold}
+                  color={theme.colors.text[2]}
+                  mt={10}
+                >
+                  Destaques
+                </Text>
+
+                <FlatList
+                  horizontal
+                  contentContainerStyle={{ gap: 15, paddingHorizontal: 20 }}
+                  nestedScrollEnabled
+                  style={{
+                    marginTop: 10,
+                  }}
+                  data={playList}
+                  keyExtractor={(h) => h.id}
+                  renderItem={({ item: h }) => (
+                    <BoxImags>
+                      <Image
+                        rounded={6}
+                        w={sizeW(0.9)}
+                        alt="img"
+                        h="200px"
+                        bg="gray.300"
+                      />
+                    </BoxImags>
+                  )}
+                />
+
+                <Text
+                  fontSize="lg"
+                  fontFamily={theme.fonts.Bold}
+                  color={theme.colors.text[2]}
+                  mt={10}
+                >
+                  Classificações
+                </Text>
+
+                <FlatList
+                  horizontal
+                  contentContainerStyle={{ gap: 15, paddingHorizontal: 20 }}
+                  nestedScrollEnabled
+                  style={{
+                    marginTop: 10,
+                  }}
+                  data={playList}
+                  keyExtractor={(h) => h.id}
+                  renderItem={({ item: h }) => (
+                    <BoxImags>
+                      <Image
+                        rounded={6}
+                        w={sizeW(0.9)}
+                        alt="img"
+                        h="200px"
+                        bg="gray.300"
+                      />
+                    </BoxImags>
+                  )}
+                />
+              </Box>
             )}
           </Center>
         </ScrollView>
